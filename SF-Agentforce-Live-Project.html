@@ -401,7 +401,7 @@ footer{border-top:1px solid var(--line);padding:40px 5%;background:var(--bg)}
 /* ── RESPONSIVE ── */
 @media(max-width:1100px){.eco,.who{grid-template-columns:repeat(3,1fr)}.ind-grid{grid-template-columns:repeat(3,1fr)}.rm-grid{grid-template-columns:repeat(3,1fr)}.roadmap::before{display:none}.journey{grid-template-columns:repeat(3,1fr)}.jy{border-bottom:1px solid var(--line)}}
 @media(max-width:960px){
-  .nav-links,.nav-actions .btn-outline{display:none}
+  .nav-links{display:none}
   .hamburger{display:flex}
   .hero-grid{grid-template-columns:1fr;gap:56px}
   .visual{max-width:560px;margin:0 auto}
@@ -678,6 +678,22 @@ footer{border-top:1px solid var(--line);padding:40px 5%;background:var(--bg)}
 .wa-line a::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:2px;background:#5be49b;transform:scaleX(0);transform-origin:left;transition:transform .3s}
 .wa-line a:hover::after{transform:scaleX(1)}
 @media(prefers-reduced-motion:reduce){#sessions .orb,.sess-head .big em,.live-pill i,.sess .sn::after,.sess-cta .btn,.sess-cta .btn::after,.final-box,.final-box::before,.final-box .spark,.batch div::after,.final-cta .btn-white,.final-cta .btn-white::after,.final-cta .btn-wa,.final-cta .btn-wa svg{animation:none!important}.sessions .sess,.final-box h2,.final-box .desc,.batch div,.final-cta .btn{opacity:1;transform:none;transition:none}.sess-head .big::after{transform:scaleX(1)}}
+
+/* ── LIVE PROJECTS nav pill ── */
+@property --lp{syntax:'<angle>';initial-value:0deg;inherits:false}
+.btn-live{position:relative;padding:10px 18px 10px 14px;border-radius:100px;background:#fff;border:0;color:var(--blue);font-weight:700;isolation:isolate;overflow:visible;box-shadow:0 6px 18px rgba(91,61,245,.18)}
+.btn-live::before{content:'';position:absolute;inset:-2px;border-radius:inherit;background:conic-gradient(from var(--lp),var(--blue),var(--purple),#ff6b6b,var(--gold),var(--blue));z-index:-2;animation:lp-spin 3s linear infinite}
+.btn-live::after{content:'';position:absolute;inset:0;border-radius:inherit;background:#fff;z-index:-1}
+@keyframes lp-spin{to{--lp:360deg}}
+.btn-live .txt{background:linear-gradient(90deg,var(--blue),var(--purple),#ff6b6b,var(--blue));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:lp-text 4s linear infinite;font-weight:800;letter-spacing:.01em}
+@keyframes lp-text{to{background-position:300% 0}}
+.btn-live .dot{width:9px;height:9px;border-radius:50%;background:#ff3b3b;box-shadow:0 0 0 0 rgba(255,59,59,.55);animation:lp-ping 1.3s ease-out infinite;flex-shrink:0}
+@keyframes lp-ping{0%{box-shadow:0 0 0 0 rgba(255,59,59,.55)}100%{box-shadow:0 0 0 9px rgba(255,59,59,0)}}
+.btn-live .tag{font-size:.6rem;font-weight:800;letter-spacing:.1em;color:#fff;background:linear-gradient(135deg,#ff3b3b,#ff6b6b);padding:3px 7px;border-radius:100px;margin-left:2px;animation:lp-tag 2.2s ease-in-out infinite}
+@keyframes lp-tag{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.btn-live:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(91,61,245,.3)}
+.btn-live:hover::before{animation-duration:1.2s}
+@media(prefers-reduced-motion:reduce){.btn-live::before,.btn-live .txt,.btn-live .dot,.btn-live .tag{animation:none!important}}
 </style>
 </head>
 <body>
@@ -732,7 +748,7 @@ footer{border-top:1px solid var(--line);padding:40px 5%;background:var(--bg)}
     <li><a href="#faq">FAQ</a></li>
   </ul>
   <div class="nav-actions">
-    <a href="#sessions" class="btn btn-outline btn-sm">3 Free Live Sessions</a>
+    <a href="#industries" class="btn btn-live btn-sm"><span class="dot"></span><span class="txt">Live Projects</span><span class="tag">12+</span></a>
     <a href="#final" class="btn btn-primary btn-sm">Enrol Now</a>
     <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
