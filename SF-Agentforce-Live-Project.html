@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude + Salesforce + Agentforce Live Project Training | Learner's Byte</title>
+<meta name="description" content="50 hours of live Salesforce, Agentforce and Claude-assisted training. 5 capstones across 5 industries, 2 real-time projects, resume and interview preparation. Join 3 free live sessions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0b1f3a;--navy2:#102a4c;--blue:#0176d3;--blue2:#1b96ff;--sky:#eaf4ff;
+  --purple:#5b3df5;--purple-l:#eeeaff;--claude:#d97757;--claude-l:#fdf0ea;--green:#0f9d58;--green-l:#e8f6ee;--gold:#d98b00;--gold-l:#fff6e3;
+  --ink:#0f172a;--text:#334155;--muted:#64748b;--line:#e2e8f0;--bg:#f6f8fb;--white:#ffffff;
+  --fh:'Plus Jakarta Sans',sans-serif;--fb:'Inter',sans-serif;--nav-h:74px;
+  --shadow:0 1px 2px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.06);--shadow-lg:0 20px 60px rgba(11,31,58,.14);
+  --r:18px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--text);font-family:var(--fb);font-size:16px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3,h4{font-family:var(--fh);color:var(--ink);letter-spacing:-.02em;line-height:1.15}
+svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+/* ── NAV ── */
+#nav{position:fixed;top:0;left:0;right:0;z-index:900;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:rgba(255,255,255,.85);backdrop-filter:blur(16px);border-bottom:1px solid transparent;transition:.3s}
+#nav.scrolled{border-bottom-color:var(--line);box-shadow:0 4px 20px rgba(15,23,42,.05)}
+.logo{font-family:var(--fh);font-weight:800;font-size:1.25rem;letter-spacing:-.02em;text-decoration:none;color:var(--navy);display:flex;align-items:center;gap:10px}
+.logo .mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--blue),var(--purple));display:grid;place-items:center;color:#fff;font-size:1rem;font-weight:800}
+.logo span.b{color:var(--blue)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--blue)}
+.nav-actions{display:flex;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;text-decoration:none;font-weight:600;font-size:.95rem;padding:14px 26px;transition:.2s;cursor:pointer;border:1px solid transparent;font-family:var(--fb);white-space:nowrap}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 6px 18px rgba(1,118,211,.3)}
+.btn-primary:hover{background:#0162b1;transform:translateY(-1px);box-shadow:0 10px 26px rgba(1,118,211,.35)}
+.btn-dark{background:var(--navy);color:#fff}
+.btn-dark:hover{background:#071527;transform:translateY(-1px)}
+.btn-outline{border-color:var(--line);color:var(--ink);background:#fff}
+.btn-outline:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-1px)}
+.btn-white{background:#fff;color:var(--navy)}
+.btn-white:hover{background:#eaf4ff;transform:translateY(-1px)}
+.btn-wa{background:#25d366;color:#fff;box-shadow:0 6px 18px rgba(37,211,102,.3)}
+.btn-wa:hover{background:#1ebe5a;transform:translateY(-1px)}
+.btn-sm{padding:10px 18px;font-size:.86rem}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:0}
+.hamburger span{width:22px;height:2px;background:var(--ink);border-radius:2px}
+.mobile-menu{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:#fff;border-bottom:1px solid var(--line);padding:16px 5% 24px;z-index:899;flex-direction:column;box-shadow:0 20px 40px rgba(15,23,42,.1)}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:var(--ink);text-decoration:none;font-size:1rem;font-weight:500;padding:13px 0;border-bottom:1px solid var(--line)}
+.mobile-menu .btn{margin-top:14px;border-bottom:0;color:#fff}
+
+/* ── UTILS ── */
+section{padding:96px 5%;position:relative}
+.wrap{max-width:1180px;margin:0 auto}
+.label{display:inline-flex;align-items:center;gap:8px;font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);background:var(--sky);padding:7px 14px;border-radius:100px;margin-bottom:18px}
+.h2{font-size:clamp(1.9rem,3.4vw,2.7rem);font-weight:800;margin-bottom:16px}
+.desc{color:var(--muted);font-size:1.06rem;line-height:1.75;max-width:700px}
+.center{text-align:center}
+.center .desc{margin:0 auto}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:30px;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s,border-color .25s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:#cfe0f5}
+.alt{background:var(--bg)}
+.dark{background:var(--navy);color:#cbd5e1}
+.dark h2,.dark h3,.dark h4{color:#fff}
+.dark .desc{color:#9fb3cc}
+.dark .label{background:rgba(255,255,255,.1);color:#8ec5ff}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+.icon{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:1.45rem;margin-bottom:18px;background:var(--sky);color:var(--blue)}
+.icon.pu{background:var(--purple-l);color:var(--purple)}
+.icon.cl{background:var(--claude-l);color:var(--claude)}
+.icon.gr{background:var(--green-l);color:var(--green)}
+.icon.go{background:var(--gold-l);color:var(--gold)}
+.note{font-size:.84rem;color:var(--muted);line-height:1.6}
+.placeholder{color:#8a5a00;background:var(--gold-l);border:1px dashed #e2b25a;border-radius:8px;padding:2px 8px;font-size:.92em}
+
+/* ── HERO ── */
+#hero{padding-top:calc(var(--nav-h) + 64px);padding-bottom:70px;background:linear-gradient(180deg,#f3f8ff 0%,#fff 70%);overflow:hidden}
+#hero::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(27,150,255,.16),transparent 65%);pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:100px;padding:7px 14px 7px 8px;font-size:.8rem;font-weight:600;color:var(--ink);margin-bottom:24px;box-shadow:var(--shadow)}
+.eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px var(--green-l);margin-left:4px}
+.stack{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:22px}
+.stack span{font-family:var(--fh);font-weight:700;font-size:.88rem;padding:7px 14px;border-radius:8px;display:inline-flex;align-items:center;gap:8px}
+.stack .s1{color:var(--claude);background:var(--claude-l)}
+.stack .s2{color:var(--blue);background:var(--sky)}
+.stack .s3{color:var(--purple);background:var(--purple-l)}
+.stack .plus{color:#94a3b8;padding:0 2px;font-weight:600}
+h1{font-size:clamp(2rem,3.6vw,3rem);font-weight:800;margin-bottom:22px}
+h1 .hl{color:var(--blue)}
+.hero-sub{color:var(--muted);font-size:1.08rem;line-height:1.75;max-width:600px;margin-bottom:28px}
+.hero-sub strong{color:var(--ink);font-weight:600}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.bonus-pill{display:inline-flex;align-items:center;gap:10px;background:var(--gold-l);border:1px solid #f3dca3;border-radius:10px;padding:10px 16px;font-size:.9rem;color:#7a4b00}
+.bonus-pill b{color:#a86400}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.stat b{display:block;font-family:var(--fh);font-size:2rem;font-weight:800;color:var(--navy);letter-spacing:-.03em;line-height:1}
+.stat b.bl{color:var(--blue)}.stat b.pu{color:var(--purple)}.stat b.go{color:var(--gold)}
+.stat span{display:block;color:var(--muted);font-size:.86rem;margin-top:6px}
+
+.visual{position:relative}
+.scene{position:relative;height:560px;max-width:560px;margin:0 auto}
+.grid-bg{position:absolute;inset:0;border-radius:28px;background-image:linear-gradient(rgba(1,118,211,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(1,118,211,.07) 1px,transparent 1px);background-size:28px 28px;-webkit-mask-image:radial-gradient(circle at 50% 40%,#000 30%,transparent 75%);mask-image:radial-gradient(circle at 50% 40%,#000 30%,transparent 75%)}
+.blob{position:absolute;border-radius:50%;filter:blur(50px);opacity:.55;animation:drift 12s ease-in-out infinite}
+.b1{width:260px;height:260px;background:#bfe0ff;top:-40px;right:-40px}
+.b2{width:220px;height:220px;background:#e3dcff;bottom:40px;left:-60px;animation-delay:-6s}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-20px,24px) scale(1.08)}}
+
+/* orbit */
+.orbit-wrap{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:340px;height:340px}
+.ring{position:absolute;inset:0;border-radius:50%;border:1px dashed rgba(1,118,211,.35)}
+.ring.r2{inset:40px;border-color:rgba(91,61,245,.3);animation:pulse-ring 3s ease-out infinite}
+.ring.r3{inset:80px;border:1px solid rgba(1,118,211,.15);animation:pulse-ring 3s ease-out infinite 1.5s}
+@keyframes pulse-ring{0%{transform:scale(.96);opacity:.9}100%{transform:scale(1.08);opacity:.2}}
+.core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:118px;height:118px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-family:var(--fh);font-weight:700;font-size:.78rem;animation:breathe 4s ease-in-out infinite}
+.core svg{font-size:1.5rem}
+@keyframes breathe{0%,100%{box-shadow:0 20px 50px rgba(1,118,211,.35),0 0 0 10px rgba(1,118,211,.08)}50%{box-shadow:0 24px 60px rgba(91,61,245,.4),0 0 0 18px rgba(91,61,245,.06)}}
+.orbit{position:absolute;inset:0;animation:spin 18s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.node{position:absolute;top:50%;left:50%;width:0;height:0}
+.node .chip{position:absolute;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:100px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-lg);font-family:var(--fh);font-weight:700;font-size:.82rem;white-space:nowrap;animation:unspin 18s linear infinite}
+@keyframes unspin{from{transform:translate(-50%,-50%) rotate(calc(-1 * var(--r)))}to{transform:translate(-50%,-50%) rotate(calc(-1 * var(--r) - 360deg))}}
+.n1{--r:0deg}.n2{--r:120deg}.n3{--r:240deg}
+.node{transform:rotate(var(--r)) translateY(-170px)}
+.n1 .chip{color:var(--claude);border-color:#f3cdbb}.n2 .chip{color:var(--blue);border-color:#bcd7f5}.n3 .chip{color:var(--purple);border-color:#d3caff}
+.particle{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--blue2);top:50%;left:50%;margin:-3px;opacity:0;animation:fly 3s ease-in-out infinite}
+.p1{--a:30deg;animation-delay:0s}.p2{--a:150deg;animation-delay:.8s;background:var(--purple)}.p3{--a:260deg;animation-delay:1.6s;background:var(--claude)}.p4{--a:330deg;animation-delay:2.4s;background:var(--green)}
+@keyframes fly{0%{transform:rotate(var(--a)) translateY(-170px) scale(.5);opacity:0}20%{opacity:1}100%{transform:rotate(var(--a)) translateY(-66px) scale(1);opacity:0}}
+
+/* pipeline card */
+.pipe-card{position:absolute;left:0;bottom:0;width:320px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 14px 12px;box-shadow:var(--shadow-lg);animation:float-a 7s ease-in-out infinite}
+.pipe-head{display:flex;align-items:center;gap:8px;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.pipe-head i{width:8px;height:8px;border-radius:50%;background:var(--green);animation:blink 1.4s infinite}
+.pipe-head .cycle{margin-left:auto;font-size:.6rem;color:#94a3b8;letter-spacing:.05em}
+@keyframes blink{50%{opacity:.3}}
+.pstep{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:10px;opacity:.35;animation:step-cycle 9s linear infinite}
+.pstep .pi{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;background:var(--bg);color:var(--muted);font-size:.85rem;flex-shrink:0}
+.pstep b{display:block;font-size:.8rem;color:var(--ink);font-weight:600}
+.pstep small{display:block;font-size:.68rem;color:var(--muted)}
+.pstep em{margin-left:auto;font-style:normal;font-size:.62rem;font-weight:700;letter-spacing:.06em;padding:3px 8px;border-radius:100px;min-width:52px;text-align:center;animation:badge-cycle 9s linear infinite}
+.pstep em::after{content:'WAIT';animation:badge-text 9s linear infinite}
+.s4 em::after{animation-name:badge-text-live}
+.s1,.s1 em,.s1 em::after{animation-delay:0s}
+.s2,.s2 em,.s2 em::after{animation-delay:2s}
+.s3,.s3 em,.s3 em::after{animation-delay:4s}
+.s4,.s4 em,.s4 em::after{animation-delay:6s}
+@keyframes step-cycle{0%{opacity:.35;background:transparent}3%{opacity:1;background:var(--sky)}20%{opacity:1;background:var(--sky)}24%{opacity:1;background:transparent}88%{opacity:1;background:transparent}100%{opacity:.35;background:transparent}}
+@keyframes badge-cycle{0%,2%{background:var(--bg);color:#94a3b8}3%,20%{background:var(--gold-l);color:var(--gold)}23%,88%{background:var(--green-l);color:var(--green)}100%{background:var(--bg);color:#94a3b8}}
+@keyframes badge-text{0%,2%{content:'WAIT'}3%,20%{content:'BUILD'}23%,88%{content:'DONE'}100%{content:'WAIT'}}
+@keyframes badge-text-live{0%,2%{content:'WAIT'}3%,20%{content:'BUILD'}23%,88%{content:'LIVE'}100%{content:'WAIT'}}
+.pbar{height:4px;border-radius:4px;background:var(--bg);margin-top:8px;overflow:hidden}
+.pbar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--purple));animation:fill 9s linear infinite}
+@keyframes fill{0%{width:0}88%{width:100%}100%{width:100%}}
+
+/* chat */
+.chat-card{position:absolute;right:0;bottom:70px;z-index:3;width:230px;background:#fff;border:1px solid #d3caff;border-radius:16px;padding:12px;box-shadow:var(--shadow-lg);animation:float-b 8s ease-in-out infinite}
+.chat-card .ch{display:flex;align-items:center;gap:6px;font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--purple);margin-bottom:8px}
+.msg{font-size:.74rem;line-height:1.45;padding:7px 10px;border-radius:10px;margin-bottom:6px}
+.msg.u{background:var(--bg);color:var(--text);border-bottom-left-radius:3px}
+.msg.a{background:var(--purple-l);color:var(--ink);border-bottom-right-radius:3px;min-height:52px}
+.caret{display:inline-block;width:2px;height:11px;background:var(--purple);vertical-align:text-bottom;margin-left:2px;animation:blink 1s infinite}
+@keyframes float-a{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes float-b{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+
+/* badges */
+.badge{position:absolute;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 14px;font-size:.74rem;color:var(--muted);box-shadow:var(--shadow-lg)}
+.badge b{display:block;font-family:var(--fh);font-size:1.1rem;color:var(--navy)}
+.bd1{top:0;right:-8px;animation:float-b 6s ease-in-out infinite}
+.bd2{top:140px;left:-16px;animation:float-a 7s ease-in-out infinite 1s}
+@media(prefers-reduced-motion:reduce){.scene *{animation:none!important}.pstep{opacity:1}.pbar span{width:100%}}
+
+/* ── MARQUEE ── */
+.industries-strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0;background:#fff;overflow:hidden}
+.marquee{display:flex;gap:44px;width:max-content;animation:scroll 45s linear infinite}
+.marquee span{font-family:var(--fh);font-weight:700;font-size:.84rem;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;display:flex;align-items:center;gap:12px;white-space:nowrap}
+.marquee span::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--blue2);opacity:.6}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ── PROBLEM ── */
+.qs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:48px 0 40px}
+.q{padding:28px;border-radius:var(--r);background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);border-top:4px solid var(--blue)}
+.q:nth-child(2){border-top-color:var(--purple)}.q:nth-child(3){border-top-color:var(--claude)}
+.q .mark{width:40px;height:40px;border-radius:10px;background:var(--sky);color:var(--blue);display:grid;place-items:center;font-family:var(--fh);font-weight:800;font-size:1.3rem;margin-bottom:16px}
+.q:nth-child(2) .mark{background:var(--purple-l);color:var(--purple)}.q:nth-child(3) .mark{background:var(--claude-l);color:var(--claude)}
+.q p{font-size:1.05rem;font-weight:600;color:var(--ink);line-height:1.5}
+.prose{max-width:820px;margin:0 auto;text-align:center}
+.prose p{color:var(--muted);font-size:1.05rem;line-height:1.8;margin-bottom:16px}
+.prose p strong{color:var(--ink);font-weight:600}
+
+/* ── ECOSYSTEM ── */
+.eco{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:48px}
+.eco .card{padding:24px 22px}
+.eco .icon{width:44px;height:44px;font-size:1.2rem;margin-bottom:14px;border-radius:12px}
+.eco h4{font-size:1rem;font-weight:700;margin-bottom:8px}
+.eco p{font-size:.86rem;color:var(--muted);line-height:1.6}
+
+/* ── ROADMAP ── */
+.roadmap{margin-top:52px;position:relative}
+.roadmap::before{content:'';position:absolute;left:0;right:0;top:34px;height:2px;background:linear-gradient(90deg,var(--blue),var(--purple),var(--claude),var(--green))}
+.rm-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.rm{position:relative;padding-top:60px}
+.rm .dot{position:absolute;top:22px;left:0;width:26px;height:26px;border-radius:50%;background:#fff;border:3px solid var(--blue);box-shadow:0 0 0 5px rgba(1,118,211,.12)}
+.rm:nth-child(3) .dot,.rm:nth-child(4) .dot{border-color:var(--purple);box-shadow:0 0 0 5px rgba(91,61,245,.12)}
+.rm:nth-child(5) .dot{border-color:var(--claude);box-shadow:0 0 0 5px rgba(217,119,87,.14)}
+.rm:nth-child(6) .dot{border-color:var(--green);box-shadow:0 0 0 5px rgba(15,157,88,.14)}
+.rm .wk{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+.rm:nth-child(3) .wk,.rm:nth-child(4) .wk{color:var(--purple)}.rm:nth-child(5) .wk{color:var(--claude)}.rm:nth-child(6) .wk{color:var(--green)}
+.rm h4{font-size:1rem;font-weight:700;margin-bottom:8px}
+.rm p{font-size:.84rem;color:var(--muted);line-height:1.55}
+.rm .cap{display:inline-block;margin-top:10px;font-size:.72rem;font-weight:600;background:var(--bg);border:1px solid var(--line);padding:4px 9px;border-radius:6px;color:var(--text)}
+.journey{display:grid;grid-template-columns:repeat(5,1fr);margin-top:56px;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+.jy{padding:26px 22px;border-right:1px solid var(--line);position:relative}
+.jy:last-child{border-right:0}
+.jy .no{font-family:var(--fh);font-size:.74rem;font-weight:800;color:var(--muted);letter-spacing:.1em;margin-bottom:10px}
+.jy .icon{width:42px;height:42px;font-size:1.15rem;margin-bottom:12px;border-radius:11px}
+.jy h4{font-size:1rem;margin-bottom:6px}
+.jy p{font-size:.84rem;color:var(--muted);line-height:1.55}
+
+/* ── THREE ── */
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
+.three .card{padding:0;overflow:hidden;background:var(--navy2);border-color:rgba(255,255,255,.08);box-shadow:none}
+.three .card:hover{border-color:rgba(255,255,255,.25)}
+.three .img{height:180px;overflow:hidden;background:#0d2446}
+.three .img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.three .card:hover .img img{transform:scale(1.05)}
+.three .body{padding:32px 28px 28px}
+.three .tag{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;display:inline-flex;align-items:center;gap:8px}
+.three .sf .tag{color:#8ec5ff}.three .af .tag{color:#c4b5fd}.three .cl .tag{color:#f6b79b}
+.three h3{font-size:1.3rem;font-weight:700;margin-bottom:12px;color:#fff}
+.three p{color:#aebdd3;line-height:1.7;font-size:.95rem}
+.three-foot{text-align:center;color:#9fb3cc;margin-top:32px;font-size:1rem}
+
+/* ── CURRICULUM ── */
+.cur-grid{max-width:900px;margin:48px auto 0}
+.cur-side{position:sticky;top:calc(var(--nav-h) + 24px)}
+.cur-side img{border-radius:var(--r);box-shadow:var(--shadow-lg);aspect-ratio:4/3;object-fit:cover;width:100%;background:var(--sky)}
+.cur-side .pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.cur-side .pill-row span{font-size:.8rem;font-weight:600;padding:7px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line);color:var(--text)}
+.acc{display:flex;flex-direction:column;gap:10px}
+.acc-item{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:border-color .25s,box-shadow .25s}
+.acc-item.open{border-color:#bcd7f5;box-shadow:var(--shadow)}
+.acc-btn{width:100%;display:flex;align-items:center;gap:16px;padding:18px 22px;background:none;border:0;cursor:pointer;text-align:left;font-family:var(--fb)}
+.acc-btn .num{font-family:var(--fh);font-weight:800;font-size:.8rem;color:#fff;width:30px;height:30px;border-radius:8px;background:var(--blue);display:grid;place-items:center;flex-shrink:0}
+.acc-btn .ttl{font-family:var(--fh);font-weight:700;font-size:1.02rem;flex:1;color:var(--ink)}
+.acc-btn .chev{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:.3s;color:var(--muted);font-size:.75rem}
+.acc-item.open .chev{transform:rotate(180deg);background:var(--blue);border-color:var(--blue);color:#fff}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.acc-body p{padding:0 22px 22px 68px;color:var(--muted);line-height:1.75;font-size:.95rem}
+.acc-item.open .acc-body{max-height:320px}
+
+/* ── INDUSTRIES ── */
+.ind-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
+.ind{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:var(--shadow);transition:.25s;display:flex;flex-direction:column}
+.ind:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.ind .icon{width:44px;height:44px;font-size:1.2rem;border-radius:12px;margin-bottom:14px}
+.ind h4{font-size:1.05rem;margin-bottom:8px}
+.ind p{font-size:.86rem;color:var(--muted);line-height:1.6;flex:1}
+.ind .ag{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-size:.82rem;font-weight:600;color:var(--purple);display:flex;gap:8px;align-items:flex-start;line-height:1.45}
+.ind .ag svg{margin-top:2px;font-size:1rem}
+.tbl-foot{margin-top:28px;text-align:center;color:var(--muted);font-size:.96rem;max-width:760px;margin-left:auto;margin-right:auto}
+
+/* ── PORTFOLIO ── */
+.port{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:48px}
+.port .card{display:flex;gap:22px;align-items:flex-start}
+.port .big{font-family:var(--fh);font-size:3.4rem;font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--blue);min-width:70px}
+.port .big.pu{color:var(--purple)}
+.port h3{font-size:1.35rem;font-weight:700;margin-bottom:10px}
+.port p{color:var(--muted);line-height:1.7}
+.flow{display:flex;flex-wrap:wrap;gap:8px;margin-top:40px;justify-content:center}
+.flow span{background:#fff;border:1px solid var(--line);padding:10px 16px;border-radius:10px;font-size:.86rem;font-weight:600;display:flex;align-items:center;gap:10px;color:var(--ink);box-shadow:var(--shadow)}
+.flow span::after{content:'→';color:var(--blue);font-weight:800}
+.flow span:last-child::after{content:none}
+.flow span:last-child{background:var(--green-l);border-color:#b9e3c9;color:var(--green)}
+.talk{margin-top:44px;max-width:860px;margin-left:auto;margin-right:auto;background:#fff;border:1px solid var(--line);border-radius:24px;padding:44px;box-shadow:var(--shadow)}
+.talk img{border-radius:16px;aspect-ratio:4/3;object-fit:cover;width:100%;background:var(--sky)}
+.talk h3{font-size:1.3rem;font-weight:700;margin-bottom:20px}
+.talk ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.talk li{display:flex;gap:12px;color:var(--text);line-height:1.6;font-size:.98rem}
+.talk li .ck{width:22px;height:22px;border-radius:50%;background:var(--green-l);color:var(--green);display:grid;place-items:center;font-size:.8rem;flex-shrink:0;margin-top:2px}
+.talk .end{margin-top:22px;font-family:var(--fh);font-weight:700;font-size:1.05rem;color:var(--ink)}
+
+/* ── OUTCOMES ── */
+.outs{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:48px}
+.out{display:flex;gap:16px;align-items:flex-start;padding:20px 22px;border-radius:14px;background:#fff;border:1px solid var(--line)}
+.out .k{font-family:var(--fh);font-weight:800;font-size:.78rem;color:var(--blue);width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:var(--sky);flex-shrink:0}
+.out p{color:var(--ink);font-size:.98rem;line-height:1.6;font-weight:500}
+
+/* ── CAREER ── */
+.career{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
+.career h3{font-size:1.2rem;font-weight:700;margin-bottom:10px}
+.career p{color:var(--muted);line-height:1.7;font-size:.95rem}
+.disclaimer{margin-top:28px;text-align:center}
+
+/* ── BONUS ── */
+.bonus-tbl{margin-top:44px;max-width:860px;margin-left:auto;margin-right:auto;border:1px solid #f0dcae;border-radius:var(--r);overflow:hidden;background:#fff;box-shadow:var(--shadow)}
+.bonus-row{display:flex;justify-content:space-between;gap:24px;align-items:center;padding:20px 26px;border-bottom:1px solid #f6e9c9}
+.bonus-row:last-child{border-bottom:0}
+.bonus-row .bt{font-weight:700;color:var(--ink);margin-bottom:3px}
+.bonus-row .bd{color:var(--muted);font-size:.9rem;line-height:1.55}
+.bonus-row .bv{font-family:var(--fh);font-weight:800;font-size:1.25rem;color:var(--gold);white-space:nowrap}
+.bonus-row.total{background:var(--gold-l)}
+.bonus-row.total .bt{font-family:var(--fh);font-size:1.1rem}
+.bonus-row.total .bv{font-size:1.7rem}
+.bonus-row .bi{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--gold-l);color:var(--gold);flex-shrink:0;font-size:1.15rem}
+.bonus-row .bl{display:flex;gap:16px;align-items:center}
+.bonus-foot{text-align:center;color:var(--muted);margin-top:22px}
+
+/* ── WHO ── */
+.who{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:48px}
+.who .card{padding:24px 20px}
+.who .icon{width:44px;height:44px;font-size:1.2rem;border-radius:12px;margin-bottom:14px}
+.who p{font-size:.9rem;color:var(--text);line-height:1.6}
+.prereq{margin-top:32px;max-width:860px;margin-left:auto;margin-right:auto;padding:22px 28px;border-radius:14px;background:var(--sky);border:1px solid #bcd7f5;color:var(--text);line-height:1.7;text-align:center}
+.prereq strong{color:var(--ink)}
+
+/* ── REVIEWS ── */
+.rating-bar{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin-top:40px;padding:26px;background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.rating-bar div{text-align:center}
+.rating-bar b{display:block;font-family:var(--fh);font-size:1.7rem;color:var(--navy)}
+.rating-bar span{font-size:.84rem;color:var(--muted)}
+.rating-bar .stars{color:#f5a623;font-size:1.1rem;letter-spacing:2px}
+.testi{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px}
+.track .card{display:flex;flex-direction:column;padding:26px}
+.track .stars{color:#f5a623;letter-spacing:2px;margin-bottom:12px;font-size:.95rem}
+.testi p{color:var(--text);line-height:1.7;flex:1;font-size:.95rem}
+.track .by{margin-top:18px;display:flex;align-items:center;gap:12px;border-top:1px solid var(--line);padding-top:16px}
+.track .av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-family:var(--fh);font-weight:800;font-size:.9rem;color:#fff;flex-shrink:0}
+.track .by b{display:block;color:var(--ink);font-size:.92rem}
+.track .by span{font-size:.8rem;color:var(--muted)}
+.track .role{font-size:.72rem;font-weight:700;color:var(--blue);background:var(--sky);padding:3px 8px;border-radius:6px;margin-left:auto;white-space:nowrap}
+/* review carousel */
+.carousel{margin-top:32px;overflow:hidden;position:relative;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.track{display:flex;gap:20px;width:max-content;animation:slide 70s linear infinite;padding:8px 0 14px}
+.carousel:hover .track{animation-play-state:paused}
+@keyframes slide{to{transform:translateX(-50%)}}
+.track .card{width:360px;flex-shrink:0}
+.track .card:hover{transform:none}
+.carousel-note{text-align:center;color:var(--muted);font-size:.84rem;margin-top:14px}
+@media(prefers-reduced-motion:reduce){.track{animation:none;flex-wrap:wrap;width:auto}}
+
+/* learning modes */
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:48px}
+.mode{position:relative;border-radius:22px;overflow:hidden;min-height:260px;box-shadow:var(--shadow-lg);background:linear-gradient(135deg,var(--navy),#1a4a85)}
+.mode+.mode{background:linear-gradient(135deg,#2b1f6e,var(--purple))}
+.mode img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mode .ov{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,31,58,0) 30%,rgba(11,31,58,.92) 100%)}
+.mode .txt{position:absolute;left:0;right:0;bottom:0;padding:28px;color:#fff}
+.mode .tag{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:rgba(255,255,255,.16);backdrop-filter:blur(6px);padding:6px 12px;border-radius:100px;margin-bottom:12px}
+.mode h3{color:#fff;font-size:1.4rem;margin-bottom:8px}
+.mode p{color:#cfdbea;font-size:.94rem;line-height:1.6;max-width:460px}
+.mode ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.mode li{font-size:.78rem;font-weight:600;background:rgba(255,255,255,.14);padding:5px 10px;border-radius:6px}
+
+/* ── SESSIONS ── */
+.sess-head{text-align:center}
+.sess-head .big{font-family:var(--fh);font-weight:800;font-size:clamp(2.2rem,5vw,3.6rem);letter-spacing:-.03em;line-height:1;margin:14px 0 10px;color:#fff}
+.sess-head .big em{font-style:normal;color:#5be49b}
+.sessions{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
+.sess{padding:30px;border-radius:var(--r);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);transition:.25s}
+.sess:hover{background:rgba(255,255,255,.08);transform:translateY(-4px)}
+.sess .sn{display:inline-block;font-family:var(--fh);font-weight:800;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#5be49b;background:rgba(91,228,155,.12);padding:5px 10px;border-radius:6px;margin-bottom:16px}
+.sess h3{font-size:1.2rem;font-weight:700;margin-bottom:10px;color:#fff}
+.sess p{color:#aebdd3;line-height:1.7;font-size:.94rem}
+.sess-cta{text-align:center;margin-top:40px}
+
+/* ── FAQ ── */
+.faq{max-width:860px;margin:48px auto 0}
+.faq .acc-body p{padding-left:22px}
+
+/* ── FINAL ── */
+.final-box{position:relative;overflow:hidden;border-radius:28px;padding:70px 60px;background:linear-gradient(135deg,var(--navy) 0%,#123a6b 60%,#1f4fa0 100%);text-align:center;color:#cbd5e1}
+.final-box::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(27,150,255,.35),transparent 45%),radial-gradient(circle at 10% 90%,rgba(91,61,245,.3),transparent 45%);pointer-events:none}
+.final-box>*{position:relative}
+.final-box h2{color:#fff}
+.final-box .label{background:rgba(255,255,255,.12);color:#8ec5ff}
+.final-box .desc{color:#b7c7dd;margin:0 auto 34px}
+.batch{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:820px;margin:0 auto 36px}
+.batch div{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:18px}
+.batch small{display:block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#9fb3cc;margin-bottom:8px}
+.batch b{font-family:var(--fh);font-size:1.02rem;color:#fff}
+.final-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.wa-line{margin-top:26px;color:#9fb3cc;font-size:.95rem}
+.wa-line a{color:#5be49b;text-decoration:none;font-weight:600}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--line);padding:40px 5%;background:var(--bg)}
+.foot{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.foot .tag{color:var(--muted);font-size:.9rem;margin-top:6px}
+.foot .copy{color:#94a3b8;font-size:.8rem;max-width:560px}
+
+/* ── STICKY MOBILE CTA ── */
+.sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:800;padding:10px 16px;background:#fff;border-top:1px solid var(--line);gap:10px;box-shadow:0 -10px 30px rgba(15,23,42,.08)}
+.sticky-cta .btn{flex:1;padding:13px 10px;font-size:.88rem}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){.eco,.who{grid-template-columns:repeat(3,1fr)}.ind-grid{grid-template-columns:repeat(3,1fr)}.rm-grid{grid-template-columns:repeat(3,1fr)}.roadmap::before{display:none}.journey{grid-template-columns:repeat(3,1fr)}.jy{border-bottom:1px solid var(--line)}}
+@media(max-width:960px){
+  .nav-links,.nav-actions .btn-outline{display:none}
+  .hamburger{display:flex}
+  .hero-grid{grid-template-columns:1fr;gap:56px}
+  .visual{max-width:560px;margin:0 auto}
+  .bd1{right:0}.bd2{left:0}
+  .qs,.three,.career,.sessions,.testi,.cur-grid,.talk,.modes{grid-template-columns:1fr}
+  .mode{min-height:240px}
+  .cur-side{position:static}
+  .eco,.who,.ind-grid{grid-template-columns:repeat(2,1fr)}
+  .port,.outs{grid-template-columns:1fr}
+  .batch{grid-template-columns:1fr}
+  .final-box{padding:50px 28px}
+}
+@media(max-width:640px){
+  section{padding:68px 16px}
+  #hero{padding-top:calc(var(--nav-h) + 32px)}
+  .nav-actions .btn{display:none}
+  .stats{grid-template-columns:1fr 1fr}
+  .eco,.who,.ind-grid,.rm-grid,.journey{grid-template-columns:1fr}
+  .jy{border-right:0}
+  .acc-body p{padding-left:22px}
+  .acc-btn{padding:16px 18px}
+  .bonus-row{flex-direction:column;align-items:flex-start;gap:10px}
+  .sticky-cta{display:flex}
+  body{padding-bottom:68px}
+  .hero-cta .btn{width:100%}
+  .scene{height:520px;transform:scale(.72);transform-origin:top center;margin-bottom:-140px}
+  
+  .port .card{flex-direction:column;gap:10px}
+  .rating-bar{gap:22px}
+  .track .card{width:300px}
+  .stamp{width:72px;height:72px;top:-40px;right:-6px;font-size:.62rem}.stamp b{font-size:.95rem}
+}
+
+/* ── SECTION ANIMATIONS ── */
+/* roadmap line draws in, marker travels */
+.roadmap::before{transform:scaleX(0);transform-origin:left;transition:transform 1.6s cubic-bezier(.2,.8,.2,1)}
+.roadmap.in::before{transform:scaleX(1)}
+.roadmap::after{content:'';position:absolute;top:28px;left:0;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--blue);box-shadow:0 0 0 6px rgba(1,118,211,.15);opacity:0}
+.roadmap.in::after{animation:runner 9s linear 1.6s infinite}
+@keyframes runner{0%{left:0;opacity:0;border-color:var(--blue)}4%{opacity:1}50%{border-color:var(--purple)}96%{opacity:1}100%{left:calc(100% - 14px);opacity:0;border-color:var(--green)}}
+.rm{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
+.roadmap.in .rm{opacity:1;transform:none}
+.roadmap.in .rm:nth-child(1){transition-delay:.3s}.roadmap.in .rm:nth-child(2){transition-delay:.5s}.roadmap.in .rm:nth-child(3){transition-delay:.7s}.roadmap.in .rm:nth-child(4){transition-delay:.9s}.roadmap.in .rm:nth-child(5){transition-delay:1.1s}.roadmap.in .rm:nth-child(6){transition-delay:1.3s}
+.rm .dot{transform:scale(0);transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
+.roadmap.in .rm .dot{transform:scale(1)}
+.roadmap.in .rm:nth-child(1) .dot{transition-delay:.4s}.roadmap.in .rm:nth-child(2) .dot{transition-delay:.6s}.roadmap.in .rm:nth-child(3) .dot{transition-delay:.8s}.roadmap.in .rm:nth-child(4) .dot{transition-delay:1s}.roadmap.in .rm:nth-child(5) .dot{transition-delay:1.2s}.roadmap.in .rm:nth-child(6) .dot{transition-delay:1.4s}
+.rm .dot::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:2px solid currentColor;opacity:0}
+.roadmap.in .rm .dot::after{animation:dot-pulse 2.4s ease-out infinite}
+.rm:nth-child(1) .dot,.rm:nth-child(2) .dot{color:var(--blue)}.rm:nth-child(3) .dot,.rm:nth-child(4) .dot{color:var(--purple)}.rm:nth-child(5) .dot{color:var(--claude)}.rm:nth-child(6) .dot{color:var(--green)}
+.rm:nth-child(2) .dot::after{animation-delay:.4s}.rm:nth-child(3) .dot::after{animation-delay:.8s}.rm:nth-child(4) .dot::after{animation-delay:1.2s}.rm:nth-child(5) .dot::after{animation-delay:1.6s}.rm:nth-child(6) .dot::after{animation-delay:2s}
+@keyframes dot-pulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.2);opacity:0}}
+.rm:hover h4{color:var(--blue)}
+.rm .cap{transition:.25s}.rm:hover .cap{background:var(--sky);border-color:#bcd7f5;color:var(--blue)}
+
+/* career journey steps */
+.journey .jy{opacity:0;transform:translateX(-24px);transition:opacity .6s,transform .6s}
+.journey.in .jy{opacity:1;transform:none}
+.journey.in .jy:nth-child(2){transition-delay:.15s}.journey.in .jy:nth-child(3){transition-delay:.3s}.journey.in .jy:nth-child(4){transition-delay:.45s}.journey.in .jy:nth-child(5){transition-delay:.6s}
+.journey.in .jy .icon{animation:icon-pop .6s cubic-bezier(.34,1.56,.64,1) both}
+.journey.in .jy:nth-child(2) .icon{animation-delay:.25s}.journey.in .jy:nth-child(3) .icon{animation-delay:.4s}.journey.in .jy:nth-child(4) .icon{animation-delay:.55s}.journey.in .jy:nth-child(5) .icon{animation-delay:.7s}
+@keyframes icon-pop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
+.jy .no::after{content:'›';margin-left:8px;color:var(--blue);display:inline-block;animation:nudge 1.6s ease-in-out infinite}
+.jy:last-child .no::after{content:'✓';color:var(--green);animation:none}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
+.jy{transition:background .25s}.jy:hover{background:var(--sky)}
+
+/* delivery flow strip */
+.flow span{position:relative;transition:.25s}
+.flow.in span{animation:flow-glow 8s ease-in-out infinite}
+.flow.in span:nth-child(1){animation-delay:0s}.flow.in span:nth-child(2){animation-delay:1s}.flow.in span:nth-child(3){animation-delay:2s}.flow.in span:nth-child(4){animation-delay:3s}.flow.in span:nth-child(5){animation-delay:4s}.flow.in span:nth-child(6){animation-delay:5s}.flow.in span:nth-child(7){animation-delay:6s}.flow.in span:nth-child(8){animation-delay:7s}
+@keyframes flow-glow{0%,100%{border-color:var(--line);box-shadow:var(--shadow);transform:translateY(0)}6%{border-color:var(--blue);box-shadow:0 10px 26px rgba(1,118,211,.25);transform:translateY(-4px);background:var(--sky)}14%{border-color:var(--line);box-shadow:var(--shadow);transform:translateY(0)}}
+
+/* reviews */
+.rating-bar .stars i{font-style:normal;display:inline-block;opacity:.2;transform:scale(.6)}
+.rating-bar.in .stars i{animation:star-in .4s cubic-bezier(.34,1.56,.64,1) forwards}
+.rating-bar.in .stars i:nth-child(2){animation-delay:.12s}.rating-bar.in .stars i:nth-child(3){animation-delay:.24s}.rating-bar.in .stars i:nth-child(4){animation-delay:.36s}.rating-bar.in .stars i:nth-child(5){animation-delay:.48s}
+@keyframes star-in{to{opacity:1;transform:scale(1)}}
+.track .card{transition:transform .35s,box-shadow .35s,border-color .35s}
+.track .card:hover{transform:translateY(-6px) rotate(-.6deg);box-shadow:var(--shadow-lg);border-color:#bcd7f5}
+.track .card .stars{display:inline-block;animation:twinkle 4s ease-in-out infinite}
+.track .card:nth-child(2n) .stars{animation-delay:1.3s}.track .card:nth-child(3n) .stars{animation-delay:2.1s}
+@keyframes twinkle{0%,100%{filter:brightness(1)}50%{filter:brightness(1.35)}}
+.track .card .av{transition:transform .3s}.track .card:hover .av{transform:scale(1.12) rotate(-6deg)}
+.carousel{opacity:0;transform:translateY(20px);transition:opacity .8s,transform .8s}
+.carousel.in{opacity:1;transform:none}
+
+/* count-up numbers */
+[data-count]{display:inline-block}
+.stat b span,.rating-bar b span,.big span,.bv span,.score span{display:inline;font-size:inherit;color:inherit;margin:0;font-family:inherit;font-weight:inherit}
+
+/* outcomes checks + bonus */
+.out .k{transition:.3s}.out:hover .k{background:var(--blue);color:#fff;transform:rotate(-8deg)}
+.bonus-row .bi{transition:.3s}.bonus-row:hover .bi{transform:rotate(-10deg) scale(1.1);background:var(--gold);color:#fff}
+.bonus-row.total .bi{animation:gift-wiggle 3s ease-in-out infinite}
+@keyframes gift-wiggle{0%,80%,100%{transform:rotate(0)}85%{transform:rotate(-10deg)}90%{transform:rotate(10deg)}95%{transform:rotate(-6deg)}}
+.icon{transition:transform .3s}.card:hover .icon,.ind:hover .icon{transform:translateY(-3px) scale(1.06)}
+.sess .sn{animation:none}.sess:hover .sn{animation:blink 1s infinite}
+@media(prefers-reduced-motion:reduce){.roadmap::before{transform:none;transition:none}.roadmap::after{display:none}.rm,.jy,.carousel{opacity:1;transform:none;transition:none}.rm .dot{transform:scale(1)}.flow.in span,.jy .no::after,.track .card .stars,.bonus-row.total .bi,.rm .dot::after{animation:none!important}}
+
+/* ── INDUSTRY CARDS ── */
+.ind-grid{perspective:1200px}
+.ind-grid .ind.reveal{opacity:0;transform:rotateX(18deg) translateY(30px);transform-origin:top center;transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+.ind-grid.in .ind.reveal{opacity:1;transform:none}
+.ind{position:relative;overflow:hidden}
+.ind::before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--purple));transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.ind:hover::before{transform:scaleX(1)}
+.ind::after{content:'';position:absolute;top:0;left:-70%;width:50%;height:100%;background:linear-gradient(110deg,transparent,rgba(1,118,211,.08),transparent);transform:skewX(-20deg);transition:left .7s}
+.ind:hover::after{left:120%}
+.ind-grid.in .ind .icon{animation:icon-pop .6s cubic-bezier(.34,1.56,.64,1) both}
+.ind:hover .icon{animation:icon-wobble .6s ease both}
+@keyframes icon-wobble{0%{transform:rotate(0)}25%{transform:rotate(-10deg) scale(1.08)}50%{transform:rotate(8deg) scale(1.08)}75%{transform:rotate(-4deg)}100%{transform:rotate(0) scale(1.06) translateY(-3px)}}
+.ind .ag{position:relative;transition:color .25s,transform .25s}
+.ind:hover .ag{color:var(--blue);transform:translateX(4px)}
+.ind .ag svg{transition:transform .3s}
+.ind:hover .ag svg{transform:scale(1.2) rotate(-8deg)}
+.ind .ag::before{content:'';position:absolute;left:-14px;top:50%;width:6px;height:6px;border-radius:50%;background:var(--green);transform:translateY(-50%);opacity:0;transition:.25s;box-shadow:0 0 0 0 rgba(15,157,88,.5)}
+.ind:hover .ag::before{left:-2px;opacity:1;animation:agent-ping 1.4s infinite}
+@keyframes agent-ping{0%{box-shadow:0 0 0 0 rgba(15,157,88,.5)}100%{box-shadow:0 0 0 8px rgba(15,157,88,0)}}
+.ind h4{transition:color .25s}.ind:hover h4{color:var(--blue)}
+.ind-grid.in .ind:nth-child(1){transition-delay:.05s}.ind-grid.in .ind:nth-child(2){transition-delay:.1s}.ind-grid.in .ind:nth-child(3){transition-delay:.15s}.ind-grid.in .ind:nth-child(4){transition-delay:.2s}.ind-grid.in .ind:nth-child(5){transition-delay:.25s}.ind-grid.in .ind:nth-child(6){transition-delay:.3s}.ind-grid.in .ind:nth-child(7){transition-delay:.35s}.ind-grid.in .ind:nth-child(8){transition-delay:.4s}.ind-grid.in .ind:nth-child(9){transition-delay:.45s}.ind-grid.in .ind:nth-child(10){transition-delay:.5s}.ind-grid.in .ind:nth-child(11){transition-delay:.55s}.ind-grid.in .ind:nth-child(12){transition-delay:.6s}
+.ind-grid.in .ind:nth-child(1) .icon{animation-delay:.15s}.ind-grid.in .ind:nth-child(2) .icon{animation-delay:.2s}.ind-grid.in .ind:nth-child(3) .icon{animation-delay:.25s}.ind-grid.in .ind:nth-child(4) .icon{animation-delay:.3s}.ind-grid.in .ind:nth-child(5) .icon{animation-delay:.35s}.ind-grid.in .ind:nth-child(6) .icon{animation-delay:.4s}.ind-grid.in .ind:nth-child(7) .icon{animation-delay:.45s}.ind-grid.in .ind:nth-child(8) .icon{animation-delay:.5s}.ind-grid.in .ind:nth-child(9) .icon{animation-delay:.55s}.ind-grid.in .ind:nth-child(10) .icon{animation-delay:.6s}.ind-grid.in .ind:nth-child(11) .icon{animation-delay:.65s}.ind-grid.in .ind:nth-child(12) .icon{animation-delay:.7s}
+/* marquee of industries: hover pause + colour */
+.industries-strip:hover .marquee{animation-play-state:paused}
+.marquee span{transition:color .2s}.marquee span:hover{color:var(--blue)}
+
+/* ── FAQ ── */
+.faq .acc-item{opacity:0;transform:translateX(-26px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.2,1),border-color .25s,box-shadow .25s;position:relative}
+.faq.in .acc-item{opacity:1;transform:none}
+.faq.in .acc-item:nth-child(1){transition-delay:.05s}.faq.in .acc-item:nth-child(2){transition-delay:.15s}.faq.in .acc-item:nth-child(3){transition-delay:.25s}.faq.in .acc-item:nth-child(4){transition-delay:.35s}.faq.in .acc-item:nth-child(5){transition-delay:.45s}.faq.in .acc-item:nth-child(6){transition-delay:.55s}
+.faq .acc-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--blue),var(--purple));transform:scaleY(0);transform-origin:top;transition:transform .35s}
+.faq .acc-item.open::before,.faq .acc-item:hover::before{transform:scaleY(1)}
+.faq .acc-btn{gap:14px}
+.faq .acc-btn .qm{width:30px;height:30px;border-radius:9px;background:var(--sky);color:var(--blue);display:grid;place-items:center;font-family:var(--fh);font-weight:800;font-size:.9rem;flex-shrink:0;transition:transform .4s cubic-bezier(.34,1.56,.64,1),background .3s,color .3s}
+.faq .acc-item:hover .acc-btn .qm{transform:rotate(-10deg) scale(1.08)}
+.faq .acc-item.open .acc-btn .qm{background:var(--blue);color:#fff;transform:rotate(360deg)}
+.faq .acc-item.open .acc-btn .qm::before{content:'!'}
+.faq .acc-item:not(.open) .acc-btn .qm::before{content:'?'}
+.faq .acc-btn .ttl{transition:color .25s}
+.faq .acc-item:hover .acc-btn .ttl,.faq .acc-item.open .acc-btn .ttl{color:var(--blue)}
+.faq .acc-body p{padding-left:66px;opacity:0;transform:translateY(-8px);transition:opacity .35s,transform .35s}
+.faq .acc-item.open .acc-body p{opacity:1;transform:none;transition-delay:.12s}
+.faq .acc-item.open{animation:faq-glow 1.2s ease-out}
+@keyframes faq-glow{0%{box-shadow:0 0 0 0 rgba(1,118,211,.35)}100%{box-shadow:0 0 0 14px rgba(1,118,211,0)}}
+.faq .acc-item .chev{transition:transform .4s cubic-bezier(.34,1.56,.64,1),background .3s,border-color .3s,color .3s}
+.faq .acc-item:hover .chev{border-color:var(--blue);color:var(--blue)}
+@media(max-width:640px){.faq .acc-body p{padding-left:18px}}
+@media(prefers-reduced-motion:reduce){.ind-grid .ind.reveal,.faq .acc-item{opacity:1;transform:none;transition:none}.ind .icon,.faq .acc-item.open{animation:none!important}.faq .acc-body p{opacity:1;transform:none}}
+
+/* ── BONUS ── */
+.bonus-tbl{position:relative;opacity:0;transform:scale(.96) translateY(20px);transition:opacity .7s,transform .7s cubic-bezier(.2,.8,.2,1)}
+.bonus-tbl.in{opacity:1;transform:none}
+.bonus-row{opacity:0;transform:translateX(30px);transition:opacity .5s,transform .5s cubic-bezier(.2,.8,.2,1),background .25s}
+.bonus-tbl.in .bonus-row{opacity:1;transform:none}
+.bonus-tbl.in .bonus-row:nth-child(2){transition-delay:.2s}.bonus-tbl.in .bonus-row:nth-child(3){transition-delay:.35s}.bonus-tbl.in .bonus-row:nth-child(4){transition-delay:.5s}.bonus-tbl.in .bonus-row:nth-child(5){transition-delay:.65s}.bonus-tbl.in .bonus-row:nth-child(6){transition-delay:.9s}
+.bonus-row:not(.total):hover{background:var(--gold-l)}
+.bonus-row .bv{position:relative;transition:transform .3s}
+.bonus-row:hover .bv{transform:scale(1.08)}
+.bonus-row:not(.total) .bv::after{content:'FREE';position:absolute;right:-6px;top:-14px;font-size:.58rem;letter-spacing:.1em;background:var(--green);color:#fff;padding:2px 6px;border-radius:4px;transform:scale(0) rotate(-12deg);transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+.bonus-tbl.in .bonus-row:not(.total) .bv::after{transform:scale(1) rotate(-12deg)}
+.bonus-tbl.in .bonus-row:nth-child(2) .bv::after{transition-delay:1.2s}.bonus-tbl.in .bonus-row:nth-child(3) .bv::after{transition-delay:1.35s}.bonus-tbl.in .bonus-row:nth-child(4) .bv::after{transition-delay:1.5s}.bonus-tbl.in .bonus-row:nth-child(5) .bv::after{transition-delay:1.65s}
+.bonus-row.total{position:relative;overflow:hidden}
+.bonus-row.total::after{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(110deg,transparent,rgba(255,255,255,.75),transparent);transform:skewX(-20deg);animation:shine 4s ease-in-out infinite 2s}
+@keyframes shine{0%{left:-60%}40%,100%{left:130%}}
+.bonus-tbl.in .bonus-row.total .bv{animation:total-pop .7s cubic-bezier(.34,1.56,.64,1) 1.6s both}
+@keyframes total-pop{0%{transform:scale(.6)}100%{transform:scale(1)}}
+.stamp{position:absolute;right:-14px;top:-52px;width:88px;height:88px;border-radius:50%;background:var(--gold);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:.72rem;line-height:1.1;text-align:center;box-shadow:0 12px 30px rgba(217,139,0,.35);transform:scale(0) rotate(-30deg);transition:transform .6s cubic-bezier(.34,1.56,.64,1) 1.8s;z-index:2;border:4px solid #fff}
+.stamp b{font-size:1.15rem;display:block}
+.bonus-tbl.in .stamp{transform:scale(1) rotate(12deg);animation:stamp-float 5s ease-in-out 2.6s infinite}
+@keyframes stamp-float{0%,100%{transform:scale(1) rotate(12deg)}50%{transform:scale(1.04) rotate(8deg)}}
+.bonus-tbl.in .bonus-row .bi{animation:icon-pop .5s cubic-bezier(.34,1.56,.64,1) both}
+.bonus-tbl.in .bonus-row:nth-child(2) .bi{animation-delay:.4s}.bonus-tbl.in .bonus-row:nth-child(3) .bi{animation-delay:.55s}.bonus-tbl.in .bonus-row:nth-child(4) .bi{animation-delay:.7s}.bonus-tbl.in .bonus-row:nth-child(5) .bi{animation-delay:.85s}.bonus-tbl.in .bonus-row:nth-child(6) .bi{animation-delay:1.1s}
+#bonus .label{animation:label-bounce 3s ease-in-out infinite}
+@keyframes label-bounce{0%,90%,100%{transform:translateY(0)}95%{transform:translateY(-4px)}}
+
+/* ── CAREER ── */
+.career .card{opacity:0;transform:translateY(30px) scale(.97);transition:opacity .6s,transform .6s cubic-bezier(.2,.8,.2,1),box-shadow .25s,border-color .25s}
+.career.in .card{opacity:1;transform:none}
+.career.in .card:nth-child(2){transition-delay:.15s}.career.in .card:nth-child(3){transition-delay:.3s}
+.career.in .card .icon{animation:icon-pop .6s cubic-bezier(.34,1.56,.64,1) both}
+.career.in .card:nth-child(2) .icon{animation-delay:.25s}.career.in .card:nth-child(3) .icon{animation-delay:.4s}
+.cv{margin-top:20px;padding:16px;border-radius:12px;background:var(--bg);border:1px solid var(--line);min-height:84px;display:flex;flex-direction:column;justify-content:center;gap:8px;transition:border-color .25s}
+.career .card:hover .cv{border-color:#bcd7f5}
+.cv .cap{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+.cv .cap em{font-style:normal;color:var(--green)}
+/* resume lines */
+.cv.resume .ln{height:8px;border-radius:4px;background:#cfe0f5;width:0}
+.cv.resume .ln.t{height:11px;background:var(--blue)}
+.career.in .cv.resume .ln{animation:line-grow .8s ease-out forwards}
+.cv.resume .ln:nth-child(1){--w:55%;animation-delay:.6s}.cv.resume .ln:nth-child(2){--w:90%;animation-delay:.8s}.cv.resume .ln:nth-child(3){--w:75%;animation-delay:1s}.cv.resume .ln:nth-child(4){--w:82%;animation-delay:1.2s}
+@keyframes line-grow{to{width:var(--w)}}
+/* interview bars */
+.cv.interview .bars{display:flex;align-items:flex-end;gap:5px;height:40px}
+.cv.interview .bars i{width:7px;border-radius:4px;background:linear-gradient(180deg,var(--purple),#a78bfa);height:30%;animation:eq 1.1s ease-in-out infinite}
+.cv.interview .bars i:nth-child(2){animation-delay:.1s}.cv.interview .bars i:nth-child(3){animation-delay:.2s}.cv.interview .bars i:nth-child(4){animation-delay:.3s}.cv.interview .bars i:nth-child(5){animation-delay:.4s}.cv.interview .bars i:nth-child(6){animation-delay:.5s}.cv.interview .bars i:nth-child(7){animation-delay:.6s}.cv.interview .bars i:nth-child(8){animation-delay:.7s}.cv.interview .bars i:nth-child(9){animation-delay:.8s}.cv.interview .bars i:nth-child(10){animation-delay:.9s}.cv.interview .bars i:nth-child(11){animation-delay:1s}.cv.interview .bars i:nth-child(12){animation-delay:1.1s}
+@keyframes eq{0%,100%{height:25%}50%{height:100%}}
+.cv.interview .qtag{font-size:.78rem;color:var(--ink);font-weight:600;position:relative;height:1.4em;overflow:hidden}
+.cv.interview .qtag span{position:absolute;left:0;top:0;white-space:nowrap;opacity:0;animation:qrotate 9s infinite}
+.cv.interview .qtag span:nth-child(2){animation-delay:3s}.cv.interview .qtag span:nth-child(3){animation-delay:6s}
+@keyframes qrotate{0%{opacity:0;transform:translateY(8px)}5%,30%{opacity:1;transform:none}36%,100%{opacity:0;transform:translateY(-8px)}}
+/* readiness meter */
+.cv.ready .meter{height:10px;border-radius:6px;background:#dde6f0;overflow:hidden}
+.cv.ready .meter i{display:block;height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,var(--green),#5be49b);transition:width 1.6s cubic-bezier(.2,.8,.2,1) .7s}
+.career.in .cv.ready .meter i{width:85%}
+.cv.ready .score{font-family:var(--fh);font-weight:800;font-size:1.3rem;color:var(--green);letter-spacing:0;text-transform:none}
+.cv.ready .chips{display:flex;gap:6px;flex-wrap:wrap}
+.cv.ready .chips span{font-size:.68rem;font-weight:600;padding:3px 8px;border-radius:5px;background:#fff;border:1px solid var(--line);opacity:0;transform:translateY(6px);transition:.4s}
+.career.in .cv.ready .chips span{opacity:1;transform:none}
+.career.in .cv.ready .chips span:nth-child(1){transition-delay:1.4s;color:var(--green);border-color:#b9e3c9}.career.in .cv.ready .chips span:nth-child(2){transition-delay:1.6s;color:var(--green);border-color:#b9e3c9}.career.in .cv.ready .chips span:nth-child(3){transition-delay:1.8s;color:var(--gold);border-color:#f3dca3}
+@media(prefers-reduced-motion:reduce){.bonus-tbl,.bonus-row,.career .card{opacity:1;transform:none;transition:none}.bonus-tbl .stamp{transform:scale(1) rotate(12deg);transition:none}.bonus-row:not(.total) .bv::after{transform:scale(1) rotate(-12deg)}.bonus-row.total::after,.stamp,#bonus .label,.cv.interview .bars i,.cv.interview .qtag span,.bonus-row .bi,.bonus-row.total .bv,.career .card .icon,.cv.resume .ln{animation:none!important}.cv.interview .qtag span:first-child{opacity:1}.cv.resume .ln{width:var(--w,80%)}.cv.ready .meter i{width:85%}.cv.ready .chips span{opacity:1;transform:none}}
+
+/* ── FREE SESSIONS ── */
+#sessions{overflow:hidden}
+#sessions .orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.35;pointer-events:none;animation:orb-drift 14s ease-in-out infinite}
+#sessions .o1{width:420px;height:420px;background:#1b96ff;top:-160px;left:-120px}
+#sessions .o2{width:360px;height:360px;background:#5b3df5;bottom:-140px;right:-100px;animation-delay:-7s}
+#sessions .o3{width:220px;height:220px;background:#5be49b;top:40%;left:55%;opacity:.15;animation-delay:-3s}
+@keyframes orb-drift{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,-30px)}}
+#sessions .wrap{position:relative}
+.sess-head .big{position:relative;display:inline-block}
+.sess-head .big em{position:relative;display:inline-block;animation:free-glow 2.4s ease-in-out infinite}
+@keyframes free-glow{0%,100%{text-shadow:0 0 0 rgba(91,228,155,0)}50%{text-shadow:0 0 28px rgba(91,228,155,.7),0 0 60px rgba(91,228,155,.3)}}
+.sess-head .big::after{content:'';position:absolute;left:0;right:0;bottom:-10px;height:4px;border-radius:4px;background:linear-gradient(90deg,#5be49b,#1b96ff,#5b3df5);transform:scaleX(0);transform-origin:left;transition:transform 1.2s cubic-bezier(.2,.8,.2,1) .3s}
+.sess-head.in .big::after{transform:scaleX(1)}
+.live-pill{display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:7px 14px;border-radius:100px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);font-size:.78rem;font-weight:600;color:#cfdbea}
+.live-pill i{width:8px;height:8px;border-radius:50%;background:#ff5f57;box-shadow:0 0 0 0 rgba(255,95,87,.6);animation:live-ping 1.4s infinite}
+@keyframes live-ping{0%{box-shadow:0 0 0 0 rgba(255,95,87,.6)}100%{box-shadow:0 0 0 10px rgba(255,95,87,0)}}
+.sessions{perspective:1200px}
+.sessions .sess{opacity:0;transform:rotateY(-18deg) translateX(-30px);transform-origin:left center;transition:opacity .7s,transform .7s cubic-bezier(.2,.8,.2,1),background .25s;position:relative;overflow:hidden}
+.sessions.in .sess{opacity:1;transform:none}
+.sessions.in .sess:nth-child(2){transition-delay:.18s}.sessions.in .sess:nth-child(3){transition-delay:.36s}
+.sess::before{content:'';position:absolute;inset:-2px;border-radius:inherit;padding:1px;background:conic-gradient(from var(--ang,0deg),transparent 0 70%,#5be49b 85%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .3s}
+@property --ang{syntax:'<angle>';initial-value:0deg;inherits:false}
+.sess:hover::before{opacity:1;animation:ring-spin 2.2s linear infinite}
+@keyframes ring-spin{to{--ang:360deg}}
+.sess .sn{position:relative;overflow:hidden}
+.sess .sn::after{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(110deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);animation:shine 3.6s ease-in-out infinite}
+.sess:nth-child(2) .sn::after{animation-delay:1.2s}.sess:nth-child(3) .sn::after{animation-delay:2.4s}
+.sess .num{position:absolute;right:18px;top:12px;font-family:var(--fh);font-weight:800;font-size:4.2rem;line-height:1;color:rgba(255,255,255,.05);transition:color .3s,transform .3s}
+.sess:hover .num{color:rgba(91,228,155,.14);transform:scale(1.1)}
+.sess h3{transition:color .25s}.sess:hover h3{color:#5be49b}
+.sess-cta .btn{position:relative;overflow:hidden}
+.sess-cta .btn::after{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(110deg,transparent,rgba(1,118,211,.18),transparent);transform:skewX(-20deg);animation:shine 3s ease-in-out infinite 1s}
+.sess-cta .btn{animation:cta-breathe 2.6s ease-in-out infinite}
+@keyframes cta-breathe{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,.25)}50%{box-shadow:0 0 0 12px rgba(255,255,255,0)}}
+
+/* ── FINAL CTA ── */
+.final-box{background-size:200% 200%;animation:grad-move 10s ease-in-out infinite}
+@keyframes grad-move{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.final-box::before{animation:orb-drift 12s ease-in-out infinite}
+.final-box .spark{position:absolute;bottom:-10px;width:6px;height:6px;border-radius:50%;background:#fff;opacity:0;animation:rise 7s linear infinite;pointer-events:none}
+.final-box .spark:nth-child(1){left:8%;animation-delay:0s}.final-box .spark:nth-child(2){left:22%;animation-delay:1.5s;background:#8ec5ff}.final-box .spark:nth-child(3){left:36%;animation-delay:3s;width:4px;height:4px}.final-box .spark:nth-child(4){left:52%;animation-delay:.8s;background:#c4b5fd}.final-box .spark:nth-child(5){left:66%;animation-delay:2.4s}.final-box .spark:nth-child(6){left:78%;animation-delay:4s;background:#5be49b}.final-box .spark:nth-child(7){left:90%;animation-delay:5.2s;width:4px;height:4px}.final-box .spark:nth-child(8){left:45%;animation-delay:6s;background:#8ec5ff}
+@keyframes rise{0%{transform:translateY(0) scale(.6);opacity:0}10%{opacity:.8}90%{opacity:.5}100%{transform:translateY(-420px) scale(1.2);opacity:0}}
+.final-box h2{opacity:0;transform:translateY(16px);transition:opacity .7s,transform .7s}
+.final-box.in h2{opacity:1;transform:none}
+.final-box .desc{opacity:0;transition:opacity .7s .2s}
+.final-box.in .desc{opacity:1}
+.batch div{opacity:0;transform:translateY(20px) scale(.96);transition:opacity .6s,transform .6s cubic-bezier(.2,.8,.2,1),background .25s,border-color .25s;position:relative;overflow:hidden}
+.final-box.in .batch div{opacity:1;transform:none}
+.final-box.in .batch div:nth-child(1){transition-delay:.35s}.final-box.in .batch div:nth-child(2){transition-delay:.5s}.final-box.in .batch div:nth-child(3){transition-delay:.65s}
+.batch div:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3)}
+.batch div::after{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(110deg,transparent,rgba(255,255,255,.12),transparent);transform:skewX(-20deg);animation:shine 5s ease-in-out infinite}
+.batch div:nth-child(2)::after{animation-delay:1.6s}.batch div:nth-child(3)::after{animation-delay:3.2s}
+.final-cta .btn{opacity:0;transform:translateY(14px);transition:opacity .6s,transform .6s,background .2s,box-shadow .3s;position:relative;overflow:hidden}
+.final-box.in .final-cta .btn{opacity:1;transform:none}
+.final-box.in .final-cta .btn:nth-child(1){transition-delay:.8s}.final-box.in .final-cta .btn:nth-child(2){transition-delay:.95s}
+.final-cta .btn-white::after{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(110deg,transparent,rgba(1,118,211,.2),transparent);transform:skewX(-20deg);animation:shine 3.4s ease-in-out infinite 1.5s}
+.final-cta .btn-white{animation:cta-breathe 2.6s ease-in-out infinite 1.5s}
+.final-cta .btn-wa{animation:wa-glow 2.2s ease-in-out infinite}
+@keyframes wa-glow{0%,100%{box-shadow:0 6px 18px rgba(37,211,102,.3)}50%{box-shadow:0 6px 30px rgba(37,211,102,.65),0 0 0 8px rgba(37,211,102,.12)}}
+.final-cta .btn-wa svg{animation:ring 2.4s ease-in-out infinite}
+@keyframes ring{0%,70%,100%{transform:rotate(0)}75%{transform:rotate(-14deg)}80%{transform:rotate(12deg)}85%{transform:rotate(-10deg)}90%{transform:rotate(8deg)}95%{transform:rotate(-4deg)}}
+.final-cta .btn:hover{transform:translateY(-3px) scale(1.02)}
+.wa-line a{position:relative}
+.wa-line a::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:2px;background:#5be49b;transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.wa-line a:hover::after{transform:scaleX(1)}
+@media(prefers-reduced-motion:reduce){#sessions .orb,.sess-head .big em,.live-pill i,.sess .sn::after,.sess-cta .btn,.sess-cta .btn::after,.final-box,.final-box::before,.final-box .spark,.batch div::after,.final-cta .btn-white,.final-cta .btn-white::after,.final-cta .btn-wa,.final-cta .btn-wa svg{animation:none!important}.sessions .sess,.final-box h2,.final-box .desc,.batch div,.final-cta .btn{opacity:1;transform:none;transition:none}.sess-head .big::after{transform:scaleX(1)}}
+</style>
+</head>
+<body>
+
+<!-- SVG ICON SPRITE -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></symbol>
+  <symbol id="i-bot" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 16h.01M16 16h.01"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.9 5.6 5.6 1.9-5.6 1.9L12 18l-1.9-5.6L4.5 10.5l5.6-1.9L12 3z"/><path d="M19 17l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M17 11a4 4 0 1 0 0-8M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2M21 21v-2a4 4 0 0 0-3-3.87"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M19 10a7 7 0 0 1-14 0M12 19v3"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 16v-5M12 16V8M17 16v-3"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v9H5v-9M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></symbol>
+  <symbol id="i-layout" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></symbol>
+  <symbol id="i-flow" viewBox="0 0 24 24"><path d="M6 3v12"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15M15 6v15"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-brief" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-grad" viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 17h14M5 17a2 2 0 0 1-2-2v-4l2-5h14l2 5v4a2 2 0 0 1-2 2"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="16.5" cy="17" r="1.5"/></symbol>
+  <symbol id="i-bank" viewBox="0 0 24 24"><path d="M3 10h18L12 4zM5 10v8M9 10v8M15 10v8M19 10v8M3 20h18"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10 12 3l9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></symbol>
+  <symbol id="i-fuel" viewBox="0 0 24 24"><path d="M3 22V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v17M3 22h12M5 10h8M15 8l3 1v9a1.5 1.5 0 0 0 3 0V9l-2-2"/></symbol>
+  <symbol id="i-signal" viewBox="0 0 24 24"><path d="M2 20h.01M7 20v-4M12 20v-8M17 20V8M22 4v16"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></symbol>
+  <symbol id="i-factory" viewBox="0 0 24 24"><path d="M2 20V9l6 4V9l6 4V4h8v16z"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="M7 20l1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2L21 12.6a2 2 0 0 0-2.75-2.91L16 11.3"/><path d="M2 15l6 6"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM16 3H6a2 2 0 0 0-2 2v2"/><circle cx="17" cy="14" r="1.5"/></symbol>
+  <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2 0-2.8a2 2 0 0 0-3-.2z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.9 12.9 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></symbol>
+</svg>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="logo"><span class="mark">LB</span>Learner's&nbsp;<span class="b">Byte</span></a>
+  <ul class="nav-links">
+    <li><a href="#ecosystem">Programme</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#curriculum">Curriculum</a></li>
+    <li><a href="#industries">Industry Projects</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#sessions" class="btn btn-outline btn-sm">3 Free Live Sessions</a>
+    <a href="#final" class="btn btn-primary btn-sm">Enrol Now</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#ecosystem">Programme</a>
+  <a href="#roadmap">Roadmap</a>
+  <a href="#curriculum">Curriculum</a>
+  <a href="#industries">Industry Projects</a>
+  <a href="#reviews">Reviews</a>
+  <a href="#faq">FAQ</a>
+  <a href="#sessions" class="btn btn-outline" style="color:var(--ink)">Join 3 Free Live Sessions</a>
+  <a href="#final" class="btn btn-primary">Enrol Now</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><i></i> Live Project Training · Next Cohort Open</div>
+      <div class="stack">
+        <span class="s1"><svg class="i"><use href="#i-spark"/></svg>Claude</span><span class="plus">+</span>
+        <span class="s2"><svg class="i"><use href="#i-cloud"/></svg>Salesforce</span><span class="plus">+</span>
+        <span class="s3"><svg class="i"><use href="#i-bot"/></svg>Agentforce</span>
+      </div>
+      <h1>Build Your <span class="hl">8 to 20 LPA</span> Career by Developing Salesforce + Agentforce Solutions. Deploy AI Agents. <span class="hl">Prove It</span> with Live Projects Across Real Industries.</h1>
+      <p class="hero-sub">Salesforce + Agentforce developers who can build end-to-end solutions and deploy AI agents are in demand across India, with roles typically paying <strong>₹8 to ₹20 LPA</strong>. In 50 live hours, learn <strong>Admin, CRM, Flows, Apex, LWC and Agentforce</strong> with Claude as your development assistant, then prove it on live projects from Banking, Insurance, Healthcare, Automobile, EdTech, Real Estate and more.</p>
+      <div class="hero-cta">
+        <a href="#sessions" class="btn btn-primary">Join 3 Free Live Sessions →</a>
+        <a href="#ecosystem" class="btn btn-outline">Explore the Training Programme</a>
+      </div>
+      <div class="bonus-pill"><svg class="i"><use href="#i-gift"/></svg> Enrolment bonus bundle: <b>₹32,000</b> worth of learning resources included FREE</div>
+      <div class="stats">
+        <div class="stat"><b class="bl"><span data-count="50">0</span></b><span>Hours of live training</span></div>
+        <div class="stat"><b class="pu">2-Month</b><span>Career transformation ecosystem</span></div>
+        <div class="stat"><b class="go"><span data-count="10">0</span>+</b><span>Industry project scenarios</span></div>
+      </div>
+    </div>
+
+    <div class="visual">
+      <div class="scene">
+        <div class="grid-bg"></div>
+        <div class="blob b1"></div><div class="blob b2"></div>
+
+        <div class="orbit-wrap">
+          <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+          <div class="core"><svg class="i"><use href="#i-layout"/></svg><span>Your Project</span></div>
+          <div class="orbit">
+            <div class="node n1"><div class="chip"><svg class="i"><use href="#i-spark"/></svg>Claude</div></div>
+            <div class="node n2"><div class="chip"><svg class="i"><use href="#i-cloud"/></svg>Salesforce</div></div>
+            <div class="node n3"><div class="chip"><svg class="i"><use href="#i-bot"/></svg>Agentforce</div></div>
+          </div>
+          <div class="particle p1"></div><div class="particle p2"></div><div class="particle p3"></div><div class="particle p4"></div>
+        </div>
+
+        <div class="pipe-card">
+          <div class="pipe-head"><i></i>Live build · Banking project<span class="cycle">looping</span></div>
+          <div class="pstep s1"><span class="pi"><svg class="i"><use href="#i-spark"/></svg></span><div><b>Requirements analysed</b><small>Claude breaks down the brief</small></div><em></em></div>
+          <div class="pstep s2"><span class="pi"><svg class="i"><use href="#i-flow"/></svg></span><div><b>Data model + Flows</b><small>Objects · record-triggered Flow</small></div><em></em></div>
+          <div class="pstep s3"><span class="pi"><svg class="i"><use href="#i-code"/></svg></span><div><b>Apex + LWC tested</b><small>Trigger framework · 92% coverage</small></div><em></em></div>
+          <div class="pstep s4"><span class="pi"><svg class="i"><use href="#i-bot"/></svg></span><div><b>Agentforce agent live</b><small>Loan status &amp; follow-up agent</small></div><em></em></div>
+          <div class="pbar"><span></span></div>
+        </div>
+
+        <div class="chat-card">
+          <div class="ch"><svg class="i"><use href="#i-bot"/></svg>Loan Status Agent</div>
+          <div class="msg u">What documents are pending on my loan?</div>
+          <div class="msg a"><span class="typed"></span><span class="caret"></span></div>
+        </div>
+
+        <div class="badge bd1"><b>5 + 2</b>Capstones + real-time projects</div>
+        <div class="badge bd2"><b>10+</b>Industry scenarios</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRY MARQUEE -->
+<div class="industries-strip">
+  <div class="marquee" id="marquee">
+    <span>Automobile</span><span>Banking</span><span>Insurance</span><span>EdTech</span><span>Finance &amp; Wealth</span><span>Real Estate</span><span>Fuel &amp; Energy</span><span>Telecom</span><span>Healthcare</span><span>Retail &amp; E-commerce</span><span>Manufacturing</span><span>Non-profit &amp; Government</span>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="label">The Gap</div>
+      <h2 class="h2">Salesforce Roles Now Expect <span style="color:var(--blue)">More Than Configuration</span></h2>
+    </div>
+    <div class="qs">
+      <div class="q reveal"><div class="mark">?</div><p>Can you build a Flow, write the Apex behind it, and explain the trade-offs?</p></div>
+      <div class="q reveal"><div class="mark">?</div><p>Have you ever deployed an AI agent inside a CRM, or only read about it?</p></div>
+      <div class="q reveal"><div class="mark">?</div><p>Can you show a project from an industry an interviewer actually works in?</p></div>
+    </div>
+    <div class="prose reveal">
+      <p>Hiring managers are looking for people who can connect the pieces: <strong>data model, automation, code, user interface and now AI agents</strong>, in the context of a real business. Knowing each feature in isolation is a start. Building an end-to-end solution for a bank, a hospital or a dealership, and explaining it clearly, is what sets you apart.</p>
+      <p>Our programme brings Salesforce training, Agentforce, Claude-assisted development, industry projects and career preparation into <strong>one structured journey</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ECOSYSTEM -->
+<section id="ecosystem" class="alt">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="label">What You Receive</div>
+      <h2 class="h2">One Ecosystem. <span style="color:var(--blue)">From First Login to Job Readiness.</span></h2>
+      <p class="desc">Everything in the programme is designed to move you from your first Developer Edition login to a portfolio you can defend in an interview.</p>
+    </div>
+    <div class="eco">
+      <div class="card reveal"><div class="icon"><svg class="i"><use href="#i-grad"/></svg></div><h4>50 hours of live training</h4><p>Cover Admin, CRM, Flows, Apex, LWC and Agentforce through structured instruction and hands-on exercises.</p></div>
+      <div class="card reveal"><div class="icon pu"><svg class="i"><use href="#i-map"/></svg></div><h4>2-month learning &amp; career ecosystem</h4><p>Follow a defined path through training, project work and career preparation.</p></div>
+      <div class="card reveal"><div class="icon go"><svg class="i"><use href="#i-layout"/></svg></div><h4>5 capstone projects, 5 industries</h4><p>Apply every module to a different business domain and build breadth.</p></div>
+      <div class="card reveal"><div class="icon gr"><svg class="i"><use href="#i-zap"/></svg></div><h4>2 real-time projects</h4><p>Work through requirements, design, build, test, documentation and demonstration end to end.</p></div>
+      <div class="card reveal"><div class="icon pu"><svg class="i"><use href="#i-bot"/></svg></div><h4>Agentforce agent in every project</h4><p>Design, configure and test an AI agent on top of the solution you built.</p></div>
+      <div class="card reveal"><div class="icon cl"><svg class="i"><use href="#i-spark"/></svg></div><h4>Claude-assisted learning</h4><p>Analyse requirements, draft and review code, investigate errors, prepare documentation, and learn to verify AI output.</p></div>
+      <div class="card reveal"><div class="icon"><svg class="i"><use href="#i-book"/></svg></div><h4>Industry project library</h4><p>Scenarios from 10+ industries you can continue practising after the course.</p></div>
+      <div class="card reveal"><div class="icon gr"><svg class="i"><use href="#i-file"/></svg></div><h4>Resume building</h4><p>Present your skills and industry projects clearly.</p></div>
+      <div class="card reveal"><div class="icon go"><svg class="i"><use href="#i-mic"/></svg></div><h4>Interview preparation</h4><p>Practise technical answers, scenario questions and project walkthroughs.</p></div>
+      <div class="card reveal"><div class="icon"><svg class="i"><use href="#i-chart"/></svg></div><h4>Job readiness assessment</h4><p>Identify strengths, gaps and next steps before you apply.</p></div>
+    </div>
+    <div class="modes">
+      <div class="mode reveal">
+        <div class="txt"><div class="tag"><svg class="i"><use href="#i-globe"/></svg>Online Live Batches</div><h3>Learn live from anywhere in India</h3><p>Interactive evening and weekend sessions, screen-shared builds in your own Developer org, recordings and doubt-clearing support.</p><ul><li>Live on Zoom / Google Meet</li><li>Session recordings</li><li>WhatsApp doubt support</li></ul></div>
+      </div>
+      <div class="mode reveal">
+        <div class="txt"><div class="tag"><svg class="i"><use href="#i-pin"/></svg>Classroom Batches</div><h3>Offline classroom in Hyderabad</h3><p>Lab-style sessions with the trainer beside you, project reviews in person and peer learning with your batch.</p><ul><li>Hands-on computer lab</li><li>In-person project reviews</li><li>Batch-mate collaboration</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="label">Your 2-Month Roadmap</div>
+      <h2 class="h2">A Clear Path, <span style="color:var(--blue)">Week by Week</span></h2>
+      <p class="desc">Indicative schedule for the 50 training hours and project work. Exact dates are confirmed with your batch.</p>
+    </div>
+    <div class="roadmap reveal anim">
+      <div class="rm-grid">
+        <div class="rm"><span class="dot"></span><div class="wk">Week 1–2</div><h4>Admin &amp; CRM Foundations</h4><p>Objects, fields, layouts, data quality, users, security and sharing.</p><span class="cap">Capstone 1 · Automobile</span></div>
+        <div class="rm"><span class="dot"></span><div class="wk">Week 3</div><h4>Flows &amp; Automation</h4><p>Record-triggered, screen and scheduled Flows, approvals and validation.</p><span class="cap">Capstone 2 · Banking</span></div>
+        <div class="rm"><span class="dot"></span><div class="wk">Week 4–5</div><h4>Apex Development</h4><p>SOQL, triggers, async Apex, governor limits, test classes.</p><span class="cap">Capstone 3 · Insurance</span></div>
+        <div class="rm"><span class="dot"></span><div class="wk">Week 5–6</div><h4>Lightning Web Components</h4><p>Templates, wire &amp; imperative Apex, events, record pages.</p><span class="cap">Capstone 4 · Healthcare</span></div>
+        <div class="rm"><span class="dot"></span><div class="wk">Week 6–7</div><h4>Agentforce + Claude</h4><p>Agent Builder, topics, actions, Prompt Builder, Trust Layer, AI review checklist.</p><span class="cap">Capstone 5 · EdTech</span></div>
+        <div class="rm"><span class="dot"></span><div class="wk">Week 7–8</div><h4>Real-Time Projects &amp; Career</h4><p>Two end-to-end industry builds, resume, mock interviews, readiness assessment.</p><span class="cap">2 Real-time projects</span></div>
+      </div>
+    </div>
+
+    <div class="center reveal" style="margin-top:72px">
+      <div class="label">Career Roadmap</div>
+      <h2 class="h2" style="font-size:clamp(1.5rem,2.6vw,2.1rem)">From Enrolment to Your First Salesforce + AI Role</h2>
+    </div>
+    <div class="journey reveal anim">
+      <div class="jy"><div class="no">STEP 01</div><div class="icon"><svg class="i"><use href="#i-cal"/></svg></div><h4>Enrol &amp; Set Up</h4><p>Developer Edition org, Claude workspace, prerequisites check and preparatory path if needed.</p></div>
+      <div class="jy"><div class="no">STEP 02</div><div class="icon pu"><svg class="i"><use href="#i-grad"/></svg></div><h4>Learn Live</h4><p>50 hours of guided sessions across Admin, Flows, Apex, LWC and Agentforce.</p></div>
+      <div class="jy"><div class="no">STEP 03</div><div class="icon go"><svg class="i"><use href="#i-layout"/></svg></div><h4>Build Projects</h4><p>5 capstones and 2 real-time industry builds, each with an Agentforce agent.</p></div>
+      <div class="jy"><div class="no">STEP 04</div><div class="icon gr"><svg class="i"><use href="#i-mic"/></svg></div><h4>Prepare</h4><p>Resume, portfolio walkthroughs, scenario interviews and readiness assessment.</p></div>
+      <div class="jy"><div class="no">STEP 05</div><div class="icon cl"><svg class="i"><use href="#i-rocket"/></svg></div><h4>Apply with Confidence</h4><p>Present industry projects employers recognise and explain every decision.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE CAPABILITIES -->
+<section id="capabilities" class="dark">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="label">The Stack</div>
+      <h2 class="h2">One Programme. Three Capabilities That Employers Ask For.</h2>
+    </div>
+    <div class="three">
+      <div class="card sf reveal">
+        <div class="body"><div class="tag"><svg class="i"><use href="#i-cloud"/></svg>Salesforce</div><h3>Configure and Build</h3><p>Administration, CRM processes, security, Flows, Apex and Lightning Web Components, taught in the order a real implementation follows.</p></div>
+      </div>
+      <div class="card af reveal">
+        <div class="body"><div class="tag"><svg class="i"><use href="#i-bot"/></svg>Agentforce</div><h3>Deploy AI Agents Inside the CRM</h3><p>Design agents with topics, instructions and actions. Connect them to Flows, Apex and knowledge. Test them against real conversations and understand the guardrails that keep them safe.</p></div>
+      </div>
+      <div class="card cl reveal">
+        <div class="body"><div class="tag"><svg class="i"><use href="#i-spark"/></svg>Claude</div><h3>Learn, Analyse and Develop Faster</h3><p>Use Claude to break down requirements, explore solution options, draft Apex and LWC code, read error messages and prepare documentation. Learn to review and test every suggestion before it reaches your org.</p></div>
+      </div>
+    </div>
+    <p class="three-foot reveal">Learn what each tool is for, how they fit together, and how to check the result.</p>
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section id="curriculum">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="label">Course Content</div>
+      <h2 class="h2">Nine Modules. <span style="color:var(--blue)">One Delivery Sequence.</span></h2>
+      <p class="desc">Taught in the order a real Salesforce implementation follows, from data model to deployed agent.</p>
+    </div>
+    <div class="cur-grid">
+      <div class="acc reveal" id="curriculumAcc">
+        <div class="acc-item open"><button class="acc-btn"><span class="num">1</span><span class="ttl">Salesforce Administration &amp; CRM</span><span class="chev">▼</span></button><div class="acc-body"><p>CRM fundamentals, the sales and service lifecycle, Salesforce navigation, standard and custom objects, fields, relationships, record types, page layouts, Lightning App Builder, data import and data quality.</p></div></div>
+        <div class="acc-item"><button class="acc-btn"><span class="num">2</span><span class="ttl">Access, Security &amp; Configuration</span><span class="chev">▼</span></button><div class="acc-body"><p>Users, profiles, permission sets and permission set groups, roles, organisation-wide defaults, sharing rules, field-level security, and how to map a business requirement to the right access model.</p></div></div>
+        <div class="acc-item"><button class="acc-btn"><span class="num">3</span><span class="ttl">Flows &amp; Declarative Automation</span><span class="chev">▼</span></button><div class="acc-body"><p>Record-triggered, screen, scheduled and autolaunched Flows, validation rules, approval processes, formula fields, error handling, debugging and when to choose automation over code.</p></div></div>
+        <div class="acc-item"><button class="acc-btn"><span class="num">4</span><span class="ttl">Apex Development</span><span class="chev">▼</span></button><div class="acc-body"><p>Apex syntax, SOQL and SOSL, triggers and trigger frameworks, classes, asynchronous Apex, governor limits, bulkification, test classes and deployment basics.</p></div></div>
+        <div class="acc-item"><button class="acc-btn"><span class="num">5</span><span class="ttl">Lightning Web Components</span><span class="chev">▼</span></button><div class="acc-body"><p>Component structure, HTML templates, JavaScript, Lightning Data Service, Apex wire and imperative calls, events, component communication, and placing components on record pages and apps.</p></div></div>
+        <div class="acc-item"><button class="acc-btn"><span class="num">6</span><span class="ttl">Agentforce</span><span class="chev">▼</span></button><div class="acc-body"><p>Agent Builder, topics and instructions, standard and custom actions built from Flows and Apex, Prompt Builder, grounding agents in Salesforce data and knowledge, the Einstein Trust Layer, testing conversations, and deploying agents to service and sales teams.</p></div></div>
+        <div class="acc-item"><button class="acc-btn"><span class="num">7</span><span class="ttl">Claude for Salesforce Development</span><span class="chev">▼</span></button><div class="acc-body"><p>Prompting for requirements analysis, generating and reviewing Apex and LWC, explaining errors and debug logs, writing test classes, producing user documentation, and a review checklist for AI-generated code.</p></div></div>
+        <div class="acc-item"><button class="acc-btn"><span class="num">8</span><span class="ttl">Industry Implementation Projects</span><span class="chev">▼</span></button><div class="acc-body"><p>Requirements gathering, solution design, data model, automation, code, Agentforce agent, testing, documentation and demonstration across the industry scenarios below.</p></div></div>
+        <div class="acc-item"><button class="acc-btn"><span class="num">9</span><span class="ttl">Career Preparation</span><span class="chev">▼</span></button><div class="acc-body"><p>Resume building, portfolio presentation, scenario-based interview practice, and the job readiness assessment.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section id="industries" class="alt">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="label">Industry Project Library</div>
+      <h2 class="h2">Build for the Industries <span style="color:var(--blue)">That Hire Salesforce Talent</span></h2>
+      <p class="desc">Every capstone and real-time project is set in a real industry context. You choose from the library below, with guidance, so your portfolio matches the roles you want.</p>
+    </div>
+    <div class="ind-grid anim">
+      <div class="ind reveal"><div class="icon"><svg class="i"><use href="#i-car"/></svg></div><h4>Automobile</h4><p>Dealer lead-to-test-drive-to-sale pipeline with service booking and vehicle inventory.</p><div class="ag"><svg class="i"><use href="#i-bot"/></svg>Test-drive booking and service reminder agent</div></div>
+      <div class="ind reveal"><div class="icon gr"><svg class="i"><use href="#i-bank"/></svg></div><h4>Banking</h4><p>Retail loan origination: application, document checklist, credit review stages and approvals.</p><div class="ag"><svg class="i"><use href="#i-bot"/></svg>Loan status and document follow-up agent</div></div>
+      <div class="ind reveal"><div class="icon pu"><svg class="i"><use href="#i-shield"/></svg></div><h4>Insurance</h4><p>Policy sales and claims intake with case escalation and renewal tracking.</p><div class="ag"><svg class="i"><use href="#i-bot"/></svg>Claims first-notice-of-loss intake agent</div></div>
+      <div class="ind reveal"><div class="icon go"><svg class="i"><use href="#i-grad"/></svg></div><h4>EdTech</h4><p>Enquiry to enrolment: counselling, batch allocation, fee instalments and learner support cases.</p><div class="ag"><svg class="i"><use href="#i-bot"/></svg>Admissions counsellor assistant agent</div></div>
+      <div class="ind reveal"><div class="icon gr"><svg class="i"><use href="#i-wallet"/></svg></div><h4>Finance &amp; Wealth</h4><p>Client onboarding with KYC checklist, portfolio review tasks and compliance approvals.</p><div class="ag"><svg class="i"><use href="#i-bot"/></svg>Client query and appointment agent</div></div>
+      <div class="ind reveal"><div class="icon cl"><svg class="i"><use href="#i-home"/></svg></div><h4>Real Estate</h4><p>Property listings, site-visit scheduling, booking and payment milestones.</p><div class="ag"><svg class="i"><use href="#i-bot"/></svg>Property enquiry and site-visit agent</div></div>
+      <div class="ind reveal"><div class="icon go"><svg class="i"><use href="#i-fuel"/></svg></div><h4>Fuel &amp; Energy</h4><p>B2B account management, fuel-card requests, delivery scheduling and field service cases.</p><div class="ag"><svg class="i"><use href="#i-bot"/></svg>Order status and delivery exception agent</div></div>
+      <div class="ind reveal"><div class="icon"><svg class="i"><use href="#i-signal"/></svg></div><h4>Communication &amp; Telecom</h4><p>Subscriber onboarding, plan changes, complaint handling and SLA-driven case routing.</p><div class="ag"><svg class="i"><use href="#i-bot"/></svg>Plan change and complaint triage agent</div></div>
+      <div class="ind reveal"><div class="icon cl"><svg class="i"><use href="#i-heart"/></svg></div><h4>Healthcare</h4><p>Patient enquiry, appointment and referral management with consent tracking.</p><div class="ag"><svg class="i"><use href="#i-bot"/></svg>Appointment scheduling and pre-visit agent</div></div>
+      <div class="ind reveal"><div class="icon pu"><svg class="i"><use href="#i-cart"/></svg></div><h4>Retail &amp; E-commerce</h4><p>Order, return and exchange support with customer 360 view.</p><div class="ag"><svg class="i"><use href="#i-bot"/></svg>Order tracking and returns agent</div></div>
+      <div class="ind reveal"><div class="icon"><svg class="i"><use href="#i-factory"/></svg></div><h4>Manufacturing</h4><p>Distributor orders, warranty claims and field technician dispatch.</p><div class="ag"><svg class="i"><use href="#i-bot"/></svg>Warranty claim intake agent</div></div>
+      <div class="ind reveal"><div class="icon gr"><svg class="i"><use href="#i-hand"/></svg></div><h4>Non-profit &amp; Government</h4><p>Programme enrolment, beneficiary case management and grant reporting.</p><div class="ag"><svg class="i"><use href="#i-bot"/></svg>Beneficiary support agent</div></div>
+    </div>
+    <p class="tbl-foot reveal">Each scenario includes a written requirements brief, sample data, acceptance criteria and a demonstration script, so you practise the way a project is actually delivered.</p>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="label">Your Portfolio</div>
+      <h2 class="h2">Build a Portfolio That Shows <span style="color:var(--blue)">Breadth and Depth</span></h2>
+    </div>
+    <div class="port">
+      <div class="card reveal"><div class="big"><span data-count="5">0</span></div><div><h3>Capstone Projects, 5 Industries</h3><p>One capstone for each major module, each set in a different industry. By the end you can speak to five business domains, not one.</p></div></div>
+      <div class="card reveal"><div class="big pu"><span data-count="2">0</span></div><div><h3>Real-Time Projects</h3><p>Experience the complete delivery workflow on two industry scenarios of your choice, from the first requirements conversation to the final demonstration.</p></div></div>
+    </div>
+    <div class="flow reveal anim">
+      <span>Requirements</span><span>Solution Design</span><span>Data Model</span><span>Automation &amp; Code</span><span>Agentforce Agent</span><span>Test</span><span>Document</span><span>Demonstrate</span>
+    </div>
+    <div class="talk reveal">
+      <div>
+        <h3>Develop the ability to discuss:</h3>
+        <ul>
+          <li><span class="ck"><svg class="i"><use href="#i-check"/></svg></span>The business problem and the industry context you addressed.</li>
+          <li><span class="ck"><svg class="i"><use href="#i-check"/></svg></span>The Salesforce features, Flows, Apex and LWC you used, and why.</li>
+          <li><span class="ck"><svg class="i"><use href="#i-check"/></svg></span>How you designed, grounded and tested the Agentforce agent.</li>
+          <li><span class="ck"><svg class="i"><use href="#i-check"/></svg></span>Where Claude helped, and how you verified its output.</li>
+          <li><span class="ck"><svg class="i"><use href="#i-check"/></svg></span>Your design decisions, trade-offs and what you would improve next.</li>
+        </ul>
+        <p class="end">Leave with work you can show, in industries employers recognise, and knowledge you can explain.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOMES -->
+<section id="outcomes" class="alt">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="label">Course Outcomes</div>
+      <h2 class="h2">By the End, <span style="color:var(--blue)">You Will Be Able To</span></h2>
+      <p class="desc">On completing the training and required project work.</p>
+    </div>
+    <div class="outs">
+      <div class="out reveal"><span class="k">01</span><p>Translate industry business requirements into Salesforce solution tasks.</p></div>
+      <div class="out reveal"><span class="k">02</span><p>Configure data structures, access controls and declarative automation.</p></div>
+      <div class="out reveal"><span class="k">03</span><p>Write, test and deploy Apex and Lightning Web Components.</p></div>
+      <div class="out reveal"><span class="k">04</span><p>Design, build, ground and test an Agentforce agent on a real business process.</p></div>
+      <div class="out reveal"><span class="k">05</span><p>Use Claude to accelerate learning and development while reviewing every output.</p></div>
+      <div class="out reveal"><span class="k">06</span><p>Build, test, document and demonstrate complete solutions across multiple industries.</p></div>
+      <div class="out reveal"><span class="k">07</span><p>Present your industry project experience clearly on your resume and in interviews.</p></div>
+      <div class="out reveal"><span class="k">08</span><p>Use assessment feedback to close gaps before you apply.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CAREER -->
+<section id="career">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="label">Career Preparation</div>
+      <h2 class="h2">Your Career Preparation <span style="color:var(--blue)">Starts During Training</span></h2>
+    </div>
+    <div class="career anim">
+      <div class="card reveal"><div class="icon"><svg class="i"><use href="#i-file"/></svg></div><h3>Resume Building</h3><p>Create a resume that highlights your Salesforce and Agentforce skills, your industry projects and relevant experience.</p><div class="cv resume"><div class="ln t"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="cap"><span>Projects · Skills · Agents</span><em>ATS ready</em></div></div></div>
+      <div class="card reveal"><div class="icon pu"><svg class="i"><use href="#i-mic"/></svg></div><h3>Interview Preparation</h3><p>Practise explaining concepts, solving scenario questions from your target industry, and walking through your projects and agents.</p><div class="cv interview"><div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="qtag"><span>"Walk me through your Agentforce agent."</span><span>"Why a Flow here instead of Apex?"</span><span>"How did you verify the AI output?"</span></div></div></div>
+      <div class="card reveal"><div class="icon gr"><svg class="i"><use href="#i-target"/></svg></div><h3>Job Readiness Assessment</h3><p>Evaluate your technical understanding, project presentation and interview preparation. Get a clear view of what you are ready for and where you need more practice.</p><div class="cv ready"><div class="cap"><span>Sample readiness score</span><span class="score"><span data-count="85">0</span>%</span></div><div class="meter"><i></i></div><div class="chips"><span>Technical ✓</span><span>Projects ✓</span><span>Interview · practise</span></div></div></div>
+    </div>
+    <p class="note disclaimer reveal">Career support helps you prepare for opportunities. Employment and salary outcomes depend on your performance, experience, employer requirements and available roles.</p>
+  </div>
+</section>
+
+<!-- BONUS -->
+<section id="bonus" class="alt">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="label" style="background:var(--gold-l);color:var(--gold)">Enrolment Bonuses</div>
+      <h2 class="h2"><span style="color:var(--gold)">₹32,000</span> in Bonuses, Included FREE</h2>
+      <p class="desc">Add these resources to your core training at no additional charge.</p>
+    </div>
+    <div class="bonus-tbl reveal anim"><div class="stamp"><b>₹32K</b>worth<br>FREE</div>
+      <div class="bonus-row"><div class="bl"><div class="bi"><svg class="i"><use href="#i-msg"/></svg></div><div><div class="bt">Prompt Engineering for Salesforce</div><div class="bd">Improve how you instruct Claude for analysis, code and documentation.</div></div></div><div class="bv">₹<span data-count="4000">0</span></div></div>
+      <div class="bonus-row"><div class="bl"><div class="bi"><svg class="i"><use href="#i-flow"/></svg></div><div><div class="bt">Automations</div><div class="bd">Extend your understanding of Flows, scheduled jobs and repeatable workflows.</div></div></div><div class="bv">₹<span data-count="12000">0</span></div></div>
+      <div class="bonus-row"><div class="bl"><div class="bi"><svg class="i"><use href="#i-book"/></svg></div><div><div class="bt">Workbooks</div><div class="bd">Reinforce Admin, Apex, LWC and Agentforce concepts through structured practice.</div></div></div><div class="bv">₹<span data-count="6000">0</span></div></div>
+      <div class="bonus-row"><div class="bl"><div class="bi"><svg class="i"><use href="#i-layout"/></svg></div><div><div class="bt">Additional Industry Capstones</div><div class="bd">More scenarios from the industry project library.</div></div></div><div class="bv">₹<span data-count="10000">0</span></div></div>
+      <div class="bonus-row total"><div class="bl"><div class="bi"><svg class="i"><use href="#i-gift"/></svg></div><div><div class="bt">Total bonus value</div><div class="bd">Included with your enrolment</div></div></div><div class="bv">₹<span data-count="32000">0</span></div></div>
+    </div>
+    <p class="bonus-foot reveal">Your training investment includes the complete bonus bundle.</p>
+  </div>
+</section>
+
+<!-- WHO -->
+<section id="who">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="label">Who It's For</div>
+      <h2 class="h2">Who Is This <span style="color:var(--blue)">Programme For?</span></h2>
+    </div>
+    <div class="who">
+      <div class="card reveal"><div class="icon"><svg class="i"><use href="#i-grad"/></svg></div><p>Graduates and job seekers who want a Salesforce career with AI skills employers now ask for.</p></div>
+      <div class="card reveal"><div class="icon pu"><svg class="i"><use href="#i-cloud"/></svg></div><p>Salesforce admins ready to add Apex, LWC and Agentforce to their profile.</p></div>
+      <div class="card reveal"><div class="icon gr"><svg class="i"><use href="#i-code"/></svg></div><p>Developers from other platforms moving into the Salesforce ecosystem.</p></div>
+      <div class="card reveal"><div class="icon go"><svg class="i"><use href="#i-brief"/></svg></div><p>Working professionals in Banking, Insurance, Healthcare, Automobile and other sectors who want to build on the CRM their industry uses.</p></div>
+      <div class="card reveal"><div class="icon cl"><svg class="i"><use href="#i-users"/></svg></div><p>Consultants and business analysts who need to design and demonstrate Agentforce solutions for clients.</p></div>
+    </div>
+    <div class="prereq reveal"><strong>No prior Salesforce experience needed.</strong> Bring basic computer skills, curiosity and a willingness to practise. Programming prerequisites for the Apex and LWC modules will be explained before enrolment, and a preparatory path is available.</div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<!-- NOTE: The six reviews below are SAMPLE testimonials written as placeholders. Replace each with a genuine, permission-based learner review before publishing. -->
+<section id="reviews" class="alt">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="label">Learn with Learner's Byte</div>
+      <h2 class="h2">A Community Built Around <span style="color:var(--blue)">Practical Learning</span></h2>
+      <p class="desc">Learners from across South India and beyond join our live batches to build real Salesforce and Agentforce projects.</p>
+    </div>
+    <div class="rating-bar reveal anim">
+      <div><b><span class="placeholder">[0000+]</span></b><span>Students trained</span></div>
+      <div><b class="stars"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></b><span>Average learner rating</span></div>
+      <div><b><span data-count="12">0</span>+</b><span>Industry scenarios</span></div>
+      <div><b><span data-count="50">0</span> hrs</b><span>Live, hands-on training</span></div>
+    </div>
+    <div class="carousel reveal" aria-label="Learner reviews, auto-scrolling">
+      <div class="track" id="reviewTrack"><div class="card"><div class="stars">★★★★★</div><p>"I had done Salesforce Admin basics on my own but never touched Apex. The way the trainer connected Flows to Apex and then explained the trade-offs made it click. My Banking capstone with the loan status agent is now the first thing I show in interviews."</p><div class="by"><div class="av" style="background:#0176d3">SR</div><div><b>Sai Rohith K.</b><span>Hyderabad, Telangana</span></div><span class="role">Salesforce Developer</span></div></div><div class="card"><div class="stars">★★★★★</div><p>"Building an actual Agentforce agent for a Healthcare appointment scenario was the highlight. We grounded it on our own data, tested conversations and fixed the instructions ourselves. Using Claude to review my test classes saved me hours."</p><div class="by"><div class="av" style="background:#5b3df5">PL</div><div><b>Priyanka L.</b><span>Visakhapatnam, Andhra Pradesh</span></div><span class="role">Admin → Developer</span></div></div><div class="card"><div class="stars">★★★★★</div><p>"Coming from a Java background, I wanted a structured path into Salesforce. The two real-time projects covered the full delivery flow, from requirements to demo. The mock interviews on my own projects were tough but exactly what I needed."</p><div class="by"><div class="av" style="background:#0f9d58">AV</div><div><b>Arun Vijay M.</b><span>Chennai, Tamil Nadu</span></div><span class="role">Java → Salesforce</span></div></div><div class="card"><div class="stars">★★★★★</div><p>"The industry focus was the difference. I work in insurance, so building a claims intake agent on top of a policy and case data model felt directly relevant. I could explain the whole solution to my manager the following week."</p><div class="by"><div class="av" style="background:#d97757">NB</div><div><b>Nandini B.</b><span>Bengaluru, Karnataka</span></div><span class="role">Business Analyst</span></div></div><div class="card"><div class="stars">★★★★★</div><p>"The LWC module was clear and practical. Wire versus imperative calls, events, placing components on record pages. The workbooks and the Claude review checklist helped me catch my own mistakes before the trainer did."</p><div class="by"><div class="av" style="background:#d98b00">VK</div><div><b>Vamshi Krishna R.</b><span>Warangal, Telangana</span></div><span class="role">Fresher · 2025 batch</span></div></div><div class="card"><div class="stars">★★★★★</div><p>"Resume building and the readiness assessment gave me a clear picture of my gaps. I redid my EdTech capstone demo three times before I was confident. The project walkthrough is what interviewers kept asking about."</p><div class="by"><div class="av" style="background:#102a4c">HS</div><div><b>Harini S.</b><span>Tirupati, Andhra Pradesh</span></div><span class="role">Salesforce Admin</span></div></div><div class="card"><div class="stars">★★★★★</div><p>"I joined the online batch from Pune and never felt distant. Every session was hands-on in my own Developer org. The Retail returns agent I built for my real-time project is now on my resume with a demo link."</p><div class="by"><div class="av" style="background:#0176d3">RD</div><div><b>Rohan Deshmukh</b><span>Pune, Maharashtra</span></div><span class="role">Support Engineer → SF Developer</span></div></div><div class="card"><div class="stars">★★★★★</div><p>"As a fresher I was worried about Apex. The preparatory path and the step-by-step trigger framework sessions made it manageable. Having a Telecom case-routing project to talk about helped me clear my first technical round."</p><div class="by"><div class="av" style="background:#5b3df5">AM</div><div><b>Ananya Mukherjee</b><span>Kolkata, West Bengal</span></div><span class="role">Fresher · B.Tech 2024</span></div></div><div class="card"><div class="stars">★★★★★</div><p>"I needed to demo Agentforce to clients, not just configure Salesforce. The programme covered topics, actions, grounding and the Trust Layer in a way I could repeat in a client meeting the following week."</p><div class="by"><div class="av" style="background:#0f9d58">KS</div><div><b>Karan Shah</b><span>Ahmedabad, Gujarat</span></div><span class="role">Consultant</span></div></div><div class="card"><div class="stars">★★★★★</div><p>"I balanced the weekend online sessions with my banking job. The Finance onboarding capstone used the exact KYC and approval flows I see at work, so I could speak with real confidence in the interview."</p><div class="by"><div class="av" style="background:#d97757">MR</div><div><b>Meera Rajan</b><span>Kochi, Kerala</span></div><span class="role">Working Professional</span></div></div><div class="card"><div class="stars">★★★★★</div><p>"The 2-month roadmap kept me on track. I knew exactly which capstone was due each week. The Claude prompting bonus module changed how I approach requirements analysis and documentation."</p><div class="by"><div class="av" style="background:#d98b00">NT</div><div><b>Neha Tiwari</b><span>Delhi NCR</span></div><span class="role">Admin → Developer</span></div></div><div class="card"><div class="stars">★★★★★</div><p>"Moving from .NET to Salesforce was easier than expected because the trainer kept linking concepts to what I already knew. The Manufacturing warranty-claim agent was my favourite build."</p><div class="by"><div class="av" style="background:#102a4c">AP</div><div><b>Aditya Patil</b><span>Nagpur, Maharashtra</span></div><span class="role">Developer from .NET</span></div></div></div>
+    </div>
+    <p class="carousel-note">Learners from Telangana, Andhra Pradesh, Tamil Nadu, Karnataka, Kerala, Maharashtra, Gujarat, West Bengal and Delhi NCR. Hover to pause.</p>
+  </div>
+</section>
+
+<!-- FREE SESSIONS -->
+<section id="sessions" class="dark">
+  <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+  <div class="wrap">
+    <div class="sess-head reveal anim">
+      <div class="label">Experience the Approach Before You Enrol</div>
+      <p style="color:#9fb3cc;font-weight:600;letter-spacing:.04em">Salesforce + Agentforce + Claude Career Launchpad</p>
+      <div class="big"><em>3 FREE</em> LIVE SESSIONS</div>
+      <div><span class="live-pill"><i></i>Live on Zoom · Limited seats per session</span></div>
+    </div>
+    <div class="sessions anim">
+      <div class="sess"><span class="num">1</span><div class="sn">Session 1</div><h3>The Salesforce Career Map in the Age of AI Agents</h3><p>Which roles are growing, what employers now expect, and how Admin, Apex, LWC and Agentforce fit together.</p></div>
+      <div class="sess"><span class="num">2</span><div class="sn">Session 2</div><h3>Watch a Live Build</h3><p>See a business requirement from one industry turned into a Flow, a component and a working Agentforce agent, with Claude assisting along the way.</p></div>
+      <div class="sess"><span class="num">3</span><div class="sn">Session 3</div><h3>Your Project and Career Path</h3><p>Explore the industry project library, the 2-month roadmap, the career preparation steps and how to choose your first scenario.</p></div>
+    </div>
+    <div class="sess-cta reveal">
+      <a href="https://wa.me/919573711075?text=Hi%2C%20I%20want%20to%20register%20for%20the%20free%20Salesforce%20%2B%20Agentforce%20%2B%20Claude%20live%20sessions." target="_blank" rel="noopener" class="btn btn-white">Register for the Free Sessions →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="label">FAQ</div>
+      <h2 class="h2">Frequently Asked <span style="color:var(--blue)">Questions</span></h2>
+    </div>
+    <div class="acc faq anim" id="faqAcc">
+      <div class="acc-item"><button class="acc-btn"><span class="qm"></span><span class="ttl">Do I need a paid Salesforce licence?</span><span class="chev">▼</span></button><div class="acc-body"><p>No. You will work in free Salesforce Developer Edition orgs. Agentforce access requirements and any trial or credit limits that apply at the time of your batch will be explained before enrolment.</p></div></div>
+      <div class="acc-item"><button class="acc-btn"><span class="qm"></span><span class="ttl">Will I need a paid Claude subscription?</span><span class="chev">▼</span></button><div class="acc-body"><p>Some exercises may use paid subscriptions or API access. Required tools, account types and expected additional costs will be shared before enrolment.</p></div></div>
+      <div class="acc-item"><button class="acc-btn"><span class="qm"></span><span class="ttl">Do I need programming experience for Apex and LWC?</span><span class="chev">▼</span></button><div class="acc-body"><p>No prior experience is required. The modules start from fundamentals, and a preparatory path is available. Speak with our team about the right starting point for you.</p></div></div>
+      <div class="acc-item"><button class="acc-btn"><span class="qm"></span><span class="ttl">Can I choose the industries for my projects?</span><span class="chev">▼</span></button><div class="acc-body"><p>Yes. Capstones span five industries for breadth, and you select the industries for your two real-time projects with guidance from the trainer.</p></div></div>
+      <div class="acc-item"><button class="acc-btn"><span class="qm"></span><span class="ttl">Is this certification training?</span><span class="chev">▼</span></button><div class="acc-body"><p>The programme builds hands-on, project-based skills. It covers topics that appear in Salesforce Administrator, Platform Developer I and AI Specialist certifications, but it is not an official certification course and does not include exam vouchers.</p></div></div>
+      <div class="acc-item"><button class="acc-btn"><span class="qm"></span><span class="ttl">Will AI do the work for me?</span><span class="chev">▼</span></button><div class="acc-body"><p>You will learn to define tasks, supervise Claude and Agentforce, test results and retain approval for important actions. Reviewing AI output is a core skill in the programme.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="final" style="padding-top:40px">
+  <div class="wrap">
+    <div class="final-box reveal anim">
+      <span class="spark"></span><span class="spark"></span><span class="spark"></span><span class="spark"></span><span class="spark"></span><span class="spark"></span><span class="spark"></span><span class="spark"></span>
+      <div class="label">Prepare for the Next Batch</div>
+      <h2 class="h2">Start Your <span style="color:#8ec5ff">8 to 20 LPA</span> Salesforce + Agentforce Career</h2>
+      <p class="desc">Your two-month journey towards an ₹8 to ₹20 LPA Salesforce + Agentforce role begins with a defined cohort schedule. Register early to review the programme, confirm your prerequisites and plan your participation.</p>
+      <div class="batch">
+        <div><small>Next batch starts</small><b><span class="placeholder">[Confirmed date]</span></b></div>
+        <div><small>Registration closes</small><b><span class="placeholder">[Confirmed deadline]</span></b></div>
+        <div><small>Available places</small><b><span class="placeholder">[Verified remaining places]</span></b></div>
+      </div>
+      <div class="final-cta">
+        <a href="https://wa.me/919573711075?text=Hi%2C%20I%20want%20to%20start%20my%20Salesforce%20%2B%20Agentforce%20Live%20Project%20Training%20journey." target="_blank" rel="noopener" class="btn btn-white">Start My 8 to 20 LPA Career Journey →</a>
+        <a href="https://wa.me/919573711075" target="_blank" rel="noopener" class="btn btn-wa"><svg class="i"><use href="#i-phone"/></svg> Speak to Our Team</a>
+      </div>
+      <p class="wa-line">WhatsApp: <a href="https://wa.me/919573711075" target="_blank" rel="noopener">+91 95737 11075</a></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot">
+    <div>
+      <a href="#hero" class="logo"><span class="mark">LB</span>Learner's&nbsp;<span class="b">Byte</span></a>
+      <p class="tag">Learn. Automate. Lead the Future.</p>
+    </div>
+    <p class="copy">© <span id="year"></span> Learner's Byte. Salesforce and Agentforce are trademarks of Salesforce, Inc. Claude is a trademark of Anthropic, PBC. Learner's Byte is an independent training provider.</p>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <a href="#sessions" class="btn btn-outline">Free Sessions</a>
+  <a href="https://wa.me/919573711075" target="_blank" rel="noopener" class="btn btn-primary">Enrol Now</a>
+</div>
+
+<script>
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>20),{passive:true});
+const hb=document.getElementById('hamburger'),mm=document.getElementById('mobileMenu');
+hb.addEventListener('click',()=>mm.classList.toggle('open'));
+mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mm.classList.remove('open')));
+const mq=document.getElementById('marquee');mq.innerHTML+=mq.innerHTML;
+const rt=document.getElementById('reviewTrack');rt.innerHTML+=rt.innerHTML;
+document.querySelectorAll('.acc').forEach(acc=>{
+  acc.querySelectorAll('.acc-btn').forEach(btn=>btn.addEventListener('click',()=>{
+    const item=btn.parentElement,open=item.classList.contains('open');
+    acc.querySelectorAll('.acc-item').forEach(i=>i.classList.remove('open'));
+    if(!open)item.classList.add('open');
+  }));
+});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.05,rootMargin:"0px 0px -5% 0px"});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4)*60+'ms';io.observe(el)});
+document.getElementById('year').textContent=new Date().getFullYear();
+(function(){const el=document.querySelector('.typed');if(!el)return;const msgs=['Two items pending: salary slip and property valuation. I have created a follow-up task for your RM.','Your credit review stage is complete. Approval is expected within 2 working days.','Document checklist updated. Shall I schedule a call with your relationship manager?'];let m=0,c=0,del=false;function tick(){const t=msgs[m];if(!del){el.textContent=t.slice(0,++c);if(c===t.length){del=true;return setTimeout(tick,2600)}return setTimeout(tick,28)}el.textContent=t.slice(0,--c);if(c===0){del=false;m=(m+1)%msgs.length;return setTimeout(tick,500)}setTimeout(tick,10)}if(!matchMedia('(prefers-reduced-motion: reduce)').matches)tick();else el.textContent=msgs[0];})();
+
+// section animations + count-up
+(function(){
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fmt=n=>n.toLocaleString('en-IN');
+  function countUp(el){const end=+el.dataset.count;if(reduce){el.textContent=fmt(end);return}const dur=1400,t0=performance.now();(function step(t){const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=fmt(Math.round(end*e));if(p<1)requestAnimationFrame(step)})(t0)}
+  const seen=new WeakSet();
+  const io2=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target;if(seen.has(el))return;seen.add(el);el.classList.add('in');el.querySelectorAll('[data-count]').forEach(countUp);if(el.matches('[data-count]'))countUp(el);io2.unobserve(el)}),{threshold:.2});
+  document.querySelectorAll('.anim,.carousel').forEach(el=>io2.observe(el));
+  document.querySelectorAll('[data-count]').forEach(el=>{if(!el.closest('.anim'))io2.observe(el)});
+})();
+</script>
+</body>
+</html>
