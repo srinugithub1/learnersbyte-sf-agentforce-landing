@@ -1337,10 +1337,17 @@ document.getElementById('year').textContent=new Date().getFullYear();
 (function(){
   var P=document.getElementById('player');if(!P)return;
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var base=P.getAttribute('data-preview'),frame=null,armed=false;
+  var base=P.getAttribute('data-preview'),frame=null,armed=false,active=false;
   P.classList.add('drive');
+  /* Browsers block autoplay until the visitor has interacted with the page, and Drive's
+     player then shows a black frame instead of its thumbnail. So the Drive player is only
+     mounted with autoplay once there has been a click, tap or key press; before that the
+     poster and play button stay on screen and one click starts the video. */
+  function act(){active=true}
+  ['pointerdown','keydown','touchstart'].forEach(function(ev){addEventListener(ev,act,{capture:true,passive:true})});
+  function canAuto(){return active||(navigator.userActivation&&navigator.userActivation.hasBeenActive)}
   function mount(auto){
-    if(frame)return;
+    if(frame||!canAuto())return;
     frame=document.createElement('iframe');
     frame.src=base+(auto?'?autoplay=1':'');
     frame.allow='autoplay; fullscreen; picture-in-picture';frame.allowFullscreen=true;frame.title='Learner\'s Byte Agentforce live demo';
@@ -1352,7 +1359,7 @@ document.getElementById('year').textContent=new Date().getFullYear();
     frame.src='about:blank';frame.remove();frame=null;
     P.classList.remove('playing');P.classList.add('paused');
   }
-  document.getElementById('vPlay').addEventListener('click',function(){armed=true;mount(true)});
+  document.getElementById('vPlay').addEventListener('click',function(){active=true;armed=true;mount(true)});
   if(!reduce){
     /* "in view" = at least half the player is visible, or the visible part fills
        most of a short viewport (phones in landscape, small windows). */
