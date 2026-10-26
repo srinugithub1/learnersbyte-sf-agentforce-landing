@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "lp-agentic-ai",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "5517", "--directory", "D:/LearnersByte Landing Page/lp-agentic-ai"],
+      "port": 5517
+    }
+  ]
+}
