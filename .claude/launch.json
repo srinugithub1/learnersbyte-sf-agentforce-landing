@@ -4,8 +4,26 @@
     {
       "name": "lp-agentic-ai",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "5517", "--directory", "D:/LearnersByte Landing Page/lp-agentic-ai"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5517",
+        "--directory",
+        "D:/LearnersByte Landing Page/lp-agentic-ai"
+      ],
       "port": 5517
+    },
+    {
+      "name": "sf-agentforce",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5518",
+        "--directory",
+        "D:/LearnersByte Landing Page/New Landing Pages separate"
+      ],
+      "port": 5518
     }
   ]
 }
